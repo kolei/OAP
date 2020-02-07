@@ -186,232 +186,177 @@ fun main() {
 
 **Итератор** — поведенческий шаблон проектирования. Представляет собой объект, позволяющий получить последовательный доступ к элементам объекта-агрегата без использования описаний каждого из агрегированных объектов.
 
-Итераторы встроены в Python. Это одна из самых мощных возможностей языка. Во многом именно итераторы делают его таким удобным. Чтобы разобраться в паттерне Итератор, следует просто изучить механизм работы итераторов и генераторов языка.
+Что-то не нашел примера под котлин, но вообще в котлине есть интерфейс Iterable и такой шаблон как-то отдельно реализовывать не нужно.
 
 
+## Посредник (Mediator)
 
-### Посредник (Mediator)
 **Посредник** — поведенческий шаблон проектирования, обеспечивающий взаимодействие множества объектов, формируя при этом слабую связанность, и избавляя объекты, от необходимости явно ссылаться друг на друга.
 
 **Пример из жизни**: Общим примером будет, когда вы говорите с кем-то по мобильнику, то между вами и собеседником находится мобильный оператор. То есть сигнал передаётся через него, а не напрямую. В данном примере оператор — посредник.
 
 **Простыми словами**: Шаблон посредник подразумевает добавление стороннего объекта (посредника) для управления взаимодействием между двумя объектами (коллегами). Шаблон помогает уменьшить связанность (coupling) классов, общающихся друг с другом, ведь теперь они не должны знать о реализациях своих собеседников.
 
-Разберем пример в коде. Простейший пример: чат (посредник), в котором пользователи (коллеги) отправляют друг другу сообщения.
+Разберем пример в коде. Простейший пример: чат (посредник), в котором пользователи отправляют друг другу сообщения.
 
-Изначально у нас есть посредник ChatRoomMediator:
+Изначально у нас есть посредник ChatMediator:
 
-interface ChatRoomMediator 
-{
-    public function showMessage(User $user, string $message);
+```kt
+class ChatMediator {
+
+    private val users: MutableList<ChatUser> = ArrayList()
+
+    fun sendMessage(msg: String, user: ChatUser) {
+        users
+            .filter { it != user }
+            .forEach {
+                it.receive(msg)
+            }
+    }
+
+    fun addUser(user: ChatUser): ChatMediator =
+        apply { users.add(user) }
+
 }
+```
 
-// Посредник
-class ChatRoom implements ChatRoomMediator
-{
-    public function showMessage(User $user, string $message)
-    {
-        $time = date('M d, y H:i');
-        $sender = $user->getName();
+И собственно пользователи чата (User):
 
-        echo $time . '[' . $sender . ']:' . $message;
-    }
-}
-Затем у нас есть наши User (коллеги):
-
-class User {
-    protected $name;
-    protected $chatMediator;
-
-    public function __construct(string $name, ChatRoomMediator $chatMediator) {
-        $this->name = $name;
-        $this->chatMediator = $chatMediator;
+```kt
+class ChatUser(private val mediator: ChatMediator, val name: String) {
+    fun send(msg: String) {
+        println("$name: Sending Message= $msg")
+        mediator.sendMessage(msg, this)
     }
 
-    public function getName() {
-        return $this->name;
-    }
-
-    public function send($message) {
-        $this->chatMediator->showMessage($this, $message);
+    fun receive(msg: String) {
+        println("$name: Message received: $msg")
     }
 }
+```
+
 Пример использования:
 
-$mediator = new ChatRoom();
+```kt
+val mediator = ChatMediator()
+val john = ChatUser(mediator, "John")
 
-$john = new User('John Doe', $mediator);
-$jane = new User('Jane Doe', $mediator);
+mediator
+    .addUser(ChatUser(mediator, "Alice"))
+    .addUser(ChatUser(mediator, "Bob"))
+    .addUser(john)
+john.send("Hi everyone!")
+```
 
-$john->send('Привет!');
-$jane->send('Привет!');
+```
+John: Sending Message= Hi everyone!
+Alice: Message received: Hi everyone!
+Bob: Message received: Hi everyone!
+```
 
-// Вывод
-// Feb 14, 10:58 [John]: Привет!
-// Feb 14, 10:58 [Jane]: Привет!
+## Хранитель (Memento)
 
-Примеры на Java и Python.
+**Хранитель** — поведенческий шаблон проектирования, позволяющий, не нарушая инкапсуляцию, зафиксировать и сохранить внутреннее состояние объекта так, чтобы позднее восстановить его в этом состоянии.
 
-Хранитель (Memento)
-Википедия гласит:
+**Пример из жизни**: В качестве примера можно привести калькулятор (создатель), у которого любая последняя выполненная операция сохраняется в памяти (хранитель), чтобы вы могли снова вызвать её с помощью каких-то кнопок (опекун).
 
-Хранитель — поведенческий шаблон проектирования, позволяющий, не нарушая инкапсуляцию, зафиксировать и сохранить внутреннее состояние объекта так, чтобы позднее восстановить его в этом состоянии.
-
-Пример из жизни: В качестве примера можно привести калькулятор (создатель), у которого любая последняя выполненная операция сохраняется в памяти (хранитель), чтобы вы могли снова вызвать её с помощью каких-то кнопок (опекун).
-
-Простыми словами: Шаблон хранитель фиксирует и хранит текущее состояние объекта, чтобы оно легко восстанавливалось.
+**Простыми словами**: Шаблон хранитель фиксирует и хранит текущее состояние объекта, чтобы оно легко восстанавливалось.
 
 Обратимся к коду. Возьмем наш пример текстового редактора, который время от времени сохраняет состояние, которое вы можете восстановить.
 
-Изначально у нас есть наш объект EditorMemento, который может содержать состояние редактора:
+```kt
+// класс данных для сериализации состояния
+data class Memento(val state: String)
 
-class EditorMemento
-{
-    protected $content;
+class Originator(var state: String) {
+    fun createMemento() = Memento(state)
 
-    public function __construct(string $content)
-    {
-        $this->content = $content;
-    }
-
-    public function getContent()
-    {
-        return $this->content;
+    fun restore(memento: Memento) {
+        state = memento.state
     }
 }
-Затем у нас есть наш Editor (создатель), который будет использовать объект хранитель:
 
-class Editor
-{
-    protected $content = '';
+class CareTaker {
+    private val mementoList = ArrayList<Memento>()
 
-    public function type(string $words)
-    {
-        $this->content = $this->content . ' ' . $words;
+    fun saveState(state: Memento) {
+        mementoList.add(state)
     }
 
-    public function getContent()
-    {
-        return $this->content;
-    }
-
-    public function save()
-    {
-        return new EditorMemento($this->content);
-    }
-
-    public function restore(EditorMemento $memento)
-    {
-        $this->content = $memento->getContent();
+    fun restore(index: Int): Memento {
+        return mementoList[index]
     }
 }
+```
+
 Пример использования:
 
-$editor = new Editor();
 
-// Печатаем что-нибудь
-$editor->type('Это первое предложение.');
-$editor->type('Это второе.');
+```kt
+val originator = Originator("initial state")
+val careTaker = CareTaker()
 
-// Сохраняем состояние для восстановления : Это первое предложение. Это второе.
-$saved = $editor->save();
+careTaker.saveState(originator.createMemento())
 
-// Печатаем ещё
-$editor->type('И это третье.');
+originator.state = "State #1"
+originator.state = "State #2"
 
-// Вывод: Данные до сохранения
-echo $editor->getContent(); // Это первое предложение. Это второе. И это третье.
+careTaker.saveState(originator.createMemento())
 
-// Восстановление последнего сохранения
-$editor->restore($saved);
+originator.state = "State #3"
+println("Current State: " + originator.state)
 
-$editor->getContent(); // Это первое предложение. Это второе.
+originator.restore(careTaker.restore(1))
+println("Second saved state: " + originator.state)
 
-Примеры на Java и Python.
+originator.restore(careTaker.restore(0))
+println("First saved state: " + originator.state)
+```
 
-Наблюдатель (Observer)
-Википедия гласит:
+```
+Current State: State #3
+Second saved state: State #2
+First saved state: initial state
+```
 
-Наблюдатель — поведенческий шаблон проектирования, также известен как «подчинённые» (Dependents). Создает механизм у класса, который позволяет получать экземпляру объекта этого класса оповещения от других объектов об изменении их состояния, тем самым наблюдая за ними.
+## Наблюдатель (Observer)
 
-Пример из жизни: Хороший пример: люди, ищущие работу, подписываются на публикации на сайтах вакансий и получают уведомления, когда появляются вакансии подходящие по параметрам.
+**Наблюдатель** — поведенческий шаблон проектирования, также известен как «подчинённые» (Dependents). Создает механизм у класса, который позволяет получать экземпляру объекта этого класса оповещения от других объектов об изменении их состояния, тем самым наблюдая за ними.
 
-Простыми словами: Шаблон определяет зависимость между объектами, чтобы при изменении состояния одного из них зависимые от него узнавали об этом.
+**Пример из жизни**: Хороший пример: люди, ищущие работу, подписываются на публикации на сайтах вакансий и получают уведомления, когда появляются вакансии подходящие по параметрам.
 
-Обратимся к коду. Приводя наш пример. Изначально у нас есть JobSeeker, которые ищут работы JobPost и должны быть уведомлены о её появлении:
+**Простыми словами**: Шаблон определяет зависимость между объектами, чтобы при изменении состояния одного из них зависимые от него узнавали об этом.
 
-class JobPost
-{
-    protected $title;
+//TODO: остановился тут
 
-    public function __construct(string $title)
-    {
-        $this->title = $title;
-    }
 
-    public function getTitle()
-    {
-        return $this->title;
+```kt
+// интерфейс для наблюдателя
+interface TextChangedListener {
+    fun onTextChanged(oldText: String, newText: String)
+}
+
+// класс, 
+class PrintingTextChangedListener : TextChangedListener {
+    
+    private var text = ""
+    
+    override fun onTextChanged(oldText: String, newText: String) {
+        text = "Text is changed: $oldText -> $newText"
     }
 }
 
-class JobSeeker implements Observer
-{
-    protected $name;
+class TextView {
 
-    public function __construct(string $name)
-    {
-        $this->name = $name;
-    }
+    val listeners = mutableListOf<TextChangedListener>()
 
-    public function onJobPosted(JobPost $job)
-    {
-        // Делаем что-то с публикациями вакансий
-        echo 'Привет ' . $this->name . '! Появилась новая работа: '. $job->getTitle();
+    var text: String by Delegates.observable("<empty>") { _, old, new ->
+        listeners.forEach { it.onTextChanged(old, new) }
     }
 }
-Затем мы делаем публикации JobPostings на которые соискатели могут подписываться:
+```
 
-class JobPostings implements Observable
-{
-    protected $observers = [];
 
-    protected function notify(JobPost $jobPosting)
-    {
-        foreach ($this->observers as $observer) {
-            $observer->onJobPosted($jobPosting);
-        }
-    }
-
-    public function attach(Observer $observer)
-    {
-        $this->observers[] = $observer;
-    }
-
-    public function addJob(JobPost $jobPosting)
-    {
-        $this->notify($jobPosting);
-    }
-}
-Пример использования:
-
-// Создаем соискателей
-$johnDoe = new JobSeeker('John Doe');
-$janeDoe = new JobSeeker('Jane Doe');
-
-// Создаем публикацию и добавляем подписчика
-$jobPostings = new JobPostings();
-$jobPostings->attach($johnDoe);
-$jobPostings->attach($janeDoe);
-
-// Добавляем новую работу и смотрим получит ли соискатель уведомление
-$jobPostings->addJob(new JobPost('Software Engineer'));
-
-// Вывод
-// Привет John Doe! Появилась новая работа: Software Engineer
-// Привет Jane Doe! Появилась новая работа: Software Engineer
-
-Примеры на Java и Python.
 
 Посетитель (Visitor)
 Википедия гласит:
