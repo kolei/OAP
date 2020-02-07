@@ -327,418 +327,348 @@ First saved state: initial state
 
 **Простыми словами**: Шаблон определяет зависимость между объектами, чтобы при изменении состояния одного из них зависимые от него узнавали об этом.
 
-//TODO: остановился тут
-
-
 ```kt
-// интерфейс для наблюдателя
+import kotlin.properties.Delegates
+
+// интерфейс для подписчиков
 interface TextChangedListener {
     fun onTextChanged(oldText: String, newText: String)
 }
 
-// класс, 
+// класс подписчика
 class PrintingTextChangedListener : TextChangedListener {
-    
-    private var text = ""
-    
+    // при получении уведомления выведет сообщение
     override fun onTextChanged(oldText: String, newText: String) {
-        text = "Text is changed: $oldText -> $newText"
+        println("Text is changed: \"$oldText\" -> \"$newText\"")
     }
 }
 
+// класс, поддерживающий подписку
 class TextView {
+    // список подписчиков
+    private val listeners = mutableListOf<TextChangedListener>()
 
-    val listeners = mutableListOf<TextChangedListener>()
+    // сеттер для добавления подписчиков в список
+    var listener: TextChangedListener? = null
+        set(value){
+            if(value!=null) listeners.add(value)
+        }
 
+
+    // Delegates.observable() при изменении свойства выполняет лямбда-функцию
     var text: String by Delegates.observable("<empty>") { _, old, new ->
-        listeners.forEach { it.onTextChanged(old, new) }
+        listeners.forEach { 
+            it.onTextChanged(old, new) 
+        }
     }
 }
 ```
 
+>В этом примере можно обойтись без делегата, сделав сеттер для поля *text*:
+>
+>```kt
+>    var text = ""
+>        set(value){
+>            if(!text.equals(value)){
+>                listeners.forEach { it.onTextChanged(text, value) }
+>                field = value
+>            }
+>        }
+>```
+>
+>Здесь *field* - это так называемое **теневое** имя текущего свойства, если бы его не было, то программа попала бы в бесконечную рекурсю при попытке сохранить новое значение внутри сеттера.
 
+Ну и проверим как работает наш код:
 
-Посетитель (Visitor)
-Википедия гласит:
+```kt
+val textView = TextView()
 
-Посетитель — поведенческий шаблон проектирования, описывающий операцию, которая выполняется над объектами других классов. При изменении visitor нет необходимости изменять обслуживаемые классы.
+// добавляем экземпляр подписчика
+textView.listener = PrintingTextChangedListener()
 
-Пример из жизни: Туристы собрались в Дубай. Сначала им нужен способ попасть туда (виза). После прибытия они будут посещать любую часть города, не спрашивая разрешения ходить где вздумается. Просто скажите им о каком-нибудь месте — и туристы могут там побывать. Шаблон посетитель помогает добавлять места для посещения.
+// меняем свойство text
+with(textView) {
+    text = "Lorem ipsum"
+    text = "dolor sit amet"
+}
+```
 
-Простыми словами: Шаблон посетитель позволяет добавлять будущие операции для объектов без их модифицирования.
+```
+Text is changed: "" -> "Lorem ipsum"
+Text is changed: "Lorem ipsum" -> "dolor sit amet"
+```
 
-Перейдем к примерам в коде. Возьмём зоопарк: у нас есть несколько видов Animal, и нам нужно послушать издаваемые ими звуки.
+## Посетитель (Visitor)
 
-// Посещаемый
-interface Animal
-{
-    public function accept(AnimalOperation $operation);
+**Посетитель** — поведенческий шаблон проектирования, описывающий операцию, которая выполняется над объектами других классов. При изменении *visitor* нет необходимости изменять обслуживаемые классы.
+
+**Пример из жизни**: Туристы собрались в Дубай. Сначала им нужен способ попасть туда (виза). После прибытия они будут посещать любую часть города, не спрашивая разрешения ходить где вздумается. Просто скажите им о каком-нибудь месте — и туристы могут там побывать. Шаблон посетитель помогает добавлять места для посещения.
+
+**Простыми словами**: Шаблон посетитель позволяет добавлять будущие операции для объектов без их модифицирования.
+
+//TODO: расписать что делает код
+
+```kt
+interface ReportVisitable {
+    fun <R> accept(visitor: ReportVisitor<R>): R
 }
 
-// Посетитель
-interface AnimalOperation
-{
-    public function visitMonkey(Monkey $monkey);
-    public function visitLion(Lion $lion);
-    public function visitDolphin(Dolphin $dolphin);
-}
-Затем у нас есть реализация для животных:
-
-class Monkey implements Animal
-{
-    public function shout()
-    {
-        echo 'У-у-а-а!';
-    }
-
-    public function accept(AnimalOperation $operation)
-    {
-        $operation->visitMonkey($this);
-    }
+class FixedPriceContract(val costPerYear: Long) : ReportVisitable {
+    override fun <R> accept(visitor: ReportVisitor<R>): R = visitor.visit(this)
 }
 
-class Lion implements Animal
-{
-    public function roar()
-    {
-        echo 'рррр!';
-    }
+class TimeAndMaterialsContract(val costPerHour: Long, val hours: Long) : ReportVisitable {
+    override fun <R> accept(visitor: ReportVisitor<R>): R = visitor.visit(this)
+}
 
-    public function accept(AnimalOperation $operation)
-    {
-        $operation->visitLion($this);
+class SupportContract(val costPerMonth: Long) : ReportVisitable {
+    override fun <R> accept(visitor: ReportVisitor<R>): R = visitor.visit(this)
+}
+
+interface ReportVisitor<out R> {
+    fun visit(contract: FixedPriceContract): R
+    fun visit(contract: TimeAndMaterialsContract): R
+    fun visit(contract: SupportContract): R
+}
+
+class MonthlyCostReportVisitor : ReportVisitor<Long> {
+    override fun visit(contract: FixedPriceContract): Long =
+        contract.costPerYear / 12
+
+    override fun visit(contract: TimeAndMaterialsContract): Long =
+        contract.costPerHour * contract.hours
+
+    override fun visit(contract: SupportContract): Long =
+        contract.costPerMonth
+}
+
+class YearlyReportVisitor : ReportVisitor<Long> {
+    override fun visit(contract: FixedPriceContract): Long =
+        contract.costPerYear
+
+    override fun visit(contract: TimeAndMaterialsContract): Long =
+        contract.costPerHour * contract.hours
+
+    override fun visit(contract: SupportContract): Long =
+        contract.costPerMonth * 12
+}
+```
+
+Пример работы:
+
+```kt
+fun main() {
+    val projects = arrayOf(
+        FixedPriceContract(costPerYear = 10000),
+        TimeAndMaterialsContract(hours = 150, costPerHour = 10),
+        SupportContract(costPerMonth = 500),
+        TimeAndMaterialsContract(hours = 50, costPerHour = 50))
+
+    val monthlyCostReportVisitor = MonthlyCostReportVisitor()
+
+    val monthlyCost = projects.map { it.accept(monthlyCostReportVisitor) }.sum()
+    println("Monthly cost: $monthlyCost")
+
+    val yearlyReportVisitor = YearlyReportVisitor()
+    val yearlyCost = projects.map { it.accept(yearlyReportVisitor) }.sum()
+    println("Yearly cost: $yearlyCost")
+}
+```
+
+```
+Monthly cost: 5333
+Yearly cost: 20000
+```
+
+## Стратегия (Strategy)
+
+**Стратегия** — поведенческий шаблон проектирования, предназначенный для определения семейства алгоритмов, инкапсуляции каждого из них и обеспечения их взаимозаменяемости. Это позволяет выбирать алгоритм путём определения соответствующего класса. Шаблон Strategy позволяет менять выбранный алгоритм независимо от объектов-клиентов, которые его используют.
+
+**Пример из жизни**: Возьмём пример с пузырьковой сортировкой. Мы её реализовали, но с ростом объёмов данных сортировка работа стала выполняться очень медленно. Тогда мы сделали быструю сортировку. Алгоритм работает быстрее на больших объёмах, но на маленьких он очень медленный. Тогда мы реализовали стратегию, при которой для маленьких объёмов данных используется пузырьковая сортировка, а для больших объёмов — быстрая.
+
+**Простыми словами**: Шаблон стратегия позволяет переключаться между алгоритмами или стратегиями в зависимости от ситуации.
+
+В примере класс для вывода (печати) строки принимающий в параметрах лямбда-функцию (стратегию) для предварительно обработки этой строки.
+
+```kt
+class Printer(private val stringFormatterStrategy: (String) -> String) {
+    fun printString(string: String) {
+        println(stringFormatterStrategy(string))
     }
 }
 
-class Dolphin implements Animal
-{
-    public function speak()
-    {
-        echo '*звуки дельфина*!'; // Я понятия не имею как описать их звуки
-    }
+val lowerCaseFormatter: (String) -> String = { it.toLowerCase() }
+val upperCaseFormatter = { it: String -> it.toUpperCase() }
+```
 
-    public function accept(AnimalOperation $operation)
-    {
-        $operation->visitDolphin($this);
-    }
-}
-Давайте реализуем посетителя:
-
-class Speak implements AnimalOperation
-{
-    public function visitMonkey(Monkey $monkey)
-    {
-        $monkey->shout();
-    }
-
-    public function visitLion(Lion $lion)
-    {
-        $lion->roar();
-    }
-
-    public function visitDolphin(Dolphin $dolphin)
-    {
-        $dolphin->speak();
-    }
-}
 Пример использования:
 
-$monkey = new Monkey();
-$lion = new Lion();
-$dolphin = new Dolphin();
+```kt
+fun main() {
+    val inputString = "LOREM ipsum DOLOR sit amet"
 
-$speak = new Speak();
+    val lowerCasePrinter = Printer(lowerCaseFormatter)
+    lowerCasePrinter.printString(inputString)
 
-$monkey->accept($speak);    // У-у-а-а!    
-$lion->accept($speak);      // Рррр!
-$dolphin->accept($speak);   // *звуки дельфина*!
-Это можно было сделать просто с помощью иерархии наследования, но тогда пришлось бы модифицировать животных при каждом добавлении к ним новых действий. А здесь менять их не нужно. Например, мы можем добавить животным прыжки, просто создав нового посетителя:
+    val upperCasePrinter = Printer(upperCaseFormatter)
+    upperCasePrinter.printString(inputString)
 
-class Jump implements AnimalOperation
-{
-    public function visitMonkey(Monkey $monkey)
-    {
-        echo 'Прыгает на 20 футов!';
-    }
-
-    public function visitLion(Lion $lion)
-    {
-        echo 'Прыгает на 7 футов!';
-    }
-
-    public function visitDolphin(Dolphin $dolphin)
-    {
-        echo 'Появился над водой и исчез!';
-    }
+    val prefixPrinter = Printer { "Prefix: $it" }
+    prefixPrinter.printString(inputString)
 }
-Пример использования:
+```
 
-$jump = new Jump();
+```
+lorem ipsum dolor sit amet
+LOREM IPSUM DOLOR SIT AMET
+Prefix: LOREM ipsum DOLOR sit amet
+```
 
-$monkey->accept($speak);   // У-у-а-а!
-$monkey->accept($jump);    // Прыгает на 20 футов!
+## Состояние (State)
 
-$lion->accept($speak);     // Рррр!
-$lion->accept($jump);      // Прыгает на 7 футов!
+**Состояние** — поведенческий шаблон проектирования. Используется в тех случаях, когда во время выполнения программы объект должен менять своё поведение в зависимости от своего состояния.
 
-$dolphin->accept($speak);  // *звуки дельфинов*!
-$dolphin->accept($jump);   // Появился над водой и исчез
+**Пример из жизни**: Допустим, в графическом редакторе вы выбрали кисть. Она меняет своё поведение в зависимости от настройки цвета, т. е. рисует линию выбранного цвета.
 
-Примеры на Java и Python.
+**Простыми словами**: Шаблон позволяет менять поведение класса при изменении состояния.
 
-Стратегия (Strategy)
-Википедия гласит:
+Перейдем к примерам в коде.
+Есть класс для авторизации пользователей (AuthorizationPresenter) и классы для состояния авторизайии: Unauthorized, Authorized. 
 
-Стратегия — поведенческий шаблон проектирования, предназначенный для определения семейства алгоритмов, инкапсуляции каждого из них и обеспечения их взаимозаменяемости. Это позволяет выбирать алгоритм путём определения соответствующего класса. Шаблон Strategy позволяет менять выбранный алгоритм независимо от объектов-клиентов, которые его используют.
+```kt
+// изолированный класс - все его наследники должны быть объявлены в этом же файле
+sealed class AuthorizationState
 
-Пример из жизни: Возьмём пример с пузырьковой сортировкой. Мы её реализовали, но с ростом объёмов данных сортировка работа стала выполняться очень медленно. Тогда мы сделали быструю сортировку. Алгоритм работает быстрее на больших объёмах, но на маленьких он очень медленный. Тогда мы реализовали стратегию, при которой для маленьких объёмов данных используется пузырьковая сортировка, а для больших объёмов — быстрая.
+// object создает экземпляр и класс одновременно
+object Unauthorized : AuthorizationState()
 
-Простыми словами: Шаблон стратегия позволяет переключаться между алгоритмами или стратегиями в зависимости от ситуации.
+class Authorized(val userName: String) : AuthorizationState()
 
-Перейдем к коду. Возьмем наш пример. Изначально у нас есть наша SortStrategy и разные её реализации:
+class AuthorizationPresenter {
 
-interface SortStrategy
-{
-    public function sort(array $dataset): array;
+    private var state: AuthorizationState = Unauthorized
+
+    val isAuthorized: Boolean
+        get() = when (state) {
+            is Authorized -> true
+            is Unauthorized -> false
+        }
+
+    val userName: String
+        get() {
+            val state = this.state //val enables smart casting of state
+            return when (state) {
+                is Authorized -> state.userName
+                is Unauthorized -> "Unknown"
+            }
+        }
+
+    fun loginUser(userName: String) {
+        state = Authorized(userName)
+    }
+
+    fun logoutUser() {
+        state = Unauthorized
+    }
+
+    override fun toString() = "User '$userName' is logged in: $isAuthorized"
 }
+```
 
-class BubbleSortStrategy implements SortStrategy
-{
-    public function sort(array $dataset): array
-    {
-        echo "Сортировка пузырьком";
+Пример работы:
 
-        // Сортировка
-        return $dataset;
-    }
+```kt
+fun main() {
+    val authorizationPresenter = AuthorizationPresenter()
+
+    authorizationPresenter.loginUser("admin")
+    println(authorizationPresenter)
+
+    authorizationPresenter.logoutUser()
+    println(authorizationPresenter)
 }
+```
 
-class QuickSortStrategy implements SortStrategy
-{
-    public function sort(array $dataset): array
-    {
-        echo "Быстрая сортировка";
+```
+User 'admin' is logged in: true
+User 'Unknown' is logged in: false
+```
 
-        // Сортировка
-        return $dataset;
-    }
-}
-И у нас есть Sorter, который собирается использовать какую-то стратегию:
+## Шаблонный метод (Template Method)
 
-class Sorter
-{
-    protected $sorter;
+**Шаблонный метод** — поведенческий шаблон проектирования, определяющий основу алгоритма и позволяющий наследникам переопределять некоторые шаги алгоритма, не изменяя его структуру в целом.
 
-    public function __construct(SortStrategy $sorter)
-    {
-        $this->sorter = $sorter;
-    }
+**Пример из жизни**: Допустим, вы собрались строить дома. Этапы будут такими:
 
-    public function sort(array $dataset): array
-    {
-        return $this->sorter->sort($dataset);
-    }
-}
-Пример использования:
+* Подготовка фундамента.
+* Возведение стен.
+* Настил крыши.
+* Настил перекрытий.
 
-$dataset = [1, 5, 4, 3, 2, 8];
-
-$sorter = new Sorter(new BubbleSortStrategy());
-$sorter->sort($dataset); // Вывод : Сортировка пузырьком
-
-$sorter = new Sorter(new QuickSortStrategy());
-$sorter->sort($dataset); // Вывод : Быстрая сортировка
-
-Примеры на Java и Python.
-
-Состояние (State)
-Википедия гласит:
-
-Состояние — поведенческий шаблон проектирования. Используется в тех случаях, когда во время выполнения программы объект должен менять своё поведение в зависимости от своего состояния.
-
-Пример из жизни: Допустим, в графическом редакторе вы выбрали кисть. Она меняет своё поведение в зависимости от настройки цвета, т. е. рисует линию выбранного цвета.
-
-Простыми словами: Шаблон позволяет менять поведение класса при изменении состояния.
-
-Перейдем к примерам в коде. Возьмем пример текстового редактора, он позволяет вам менять состояние напечатанного текста. Например, если у вас выбран курсив, то он будет писать курсивом и так далее.
-
-Изначально у нас есть интерфейс WritingState и несколько его реализаций:
-
-interface WritingState
-{
-    public function write(string $words);
-}
-
-class UpperCase implements WritingState
-{
-    public function write(string $words)
-    {
-        echo strtoupper($words);
-    }
-}
-
-class LowerCase implements WritingState
-{
-    public function write(string $words)
-    {
-        echo strtolower($words);
-    }
-}
-
-class Default implements WritingState
-{
-    public function write(string $words)
-    {
-        echo $words;
-    }
-}
-Затем TextEditor:
-
-class TextEditor
-{
-    protected $state;
-
-    public function __construct(WritingState $state)
-    {
-        $this->state = $state;
-    }
-
-    public function setState(WritingState $state)
-    {
-        $this->state = $state;
-    }
-
-    public function type(string $words)
-    {
-        $this->state->write($words);
-    }
-}
-Пример использования:
-
-$editor = new TextEditor(new Default());
-
-$editor->type('Первая строка');
-
-$editor->setState(new UpperCase());
-
-$editor->type('Вторая строка');
-$editor->type('Третья строка');
-
-$editor->setState(new LowerCase());
-
-$editor->type('Четвертая строка');
-$editor->type('Пятая строка');
-
-// Output:
-// Первая строка
-// ВТОРАЯ СТРОКА
-// ТРЕТЬЯ СТРОКА
-// четвертая строка
-// пятая строка
-
-Примеры на Java и Python.
-
-Шаблонный метод (Template Method)
-Википедия гласит:
-
-Шаблонный метод — поведенческий шаблон проектирования, определяющий основу алгоритма и позволяющий наследникам переопределять некоторые шаги алгоритма, не изменяя его структуру в целом.
-
-Пример из жизни: Допустим, вы собрались строить дома. Этапы будут такими:
-
-Подготовка фундамента.
-Возведение стен.
-Настил крыши.
-Настил перекрытий.
 Порядок этапов никогда не меняется. Вы не настелите крышу до возведения стен и т. д. Но каждый этап модифицируется: стены, например, можно возвести из дерева, кирпича или газобетона.
 
-Простыми словами: Шаблонный метод определяет каркас выполнения определённого алгоритма, но реализацию самих этапов делегирует дочерним классам.
+**Простыми словами**: Шаблонный метод определяет каркас выполнения определённого алгоритма, но реализацию самих этапов делегирует дочерним классам.
 
 Обратимся к коду. Допустим, у нас есть программный инструмент, позволяющий тестировать, проводить контроль качества кода, выполнять сборку, генерировать отчёты сборки (отчёты о покрытии кода, о качестве кода и т. д.), а также развёртывать приложение на тестовом сервере.
 
 Изначально у нас есть наш Builder, который описывает скелет для построения алгоритма:
 
-abstract class Builder
-{
-
+```kt
+abstract class Builder {
     // Шаблонный метод
-    final public function build()
-    {
-        $this->test();
-        $this->lint();
-        $this->assemble();
-        $this->deploy();
+    fun build() {
+        test()
+        lint()
+        assemble()
+        deploy()
     }
 
-    abstract public function test();
-    abstract public function lint();
-    abstract public function assemble();
-    abstract public function deploy();
+    abstract fun test()
+    abstract fun lint()
+    abstract fun assemble()
+    abstract fun deploy()
 }
+```
+
 Затем у нас есть его реализации:
 
-class AndroidBuilder extends Builder
-{
-    public function test()
-    {
-        echo 'Запуск Android тестов';
-    }
-
-    public function lint()
-    {
-        echo 'Копирование Android кода';
-    }
-
-    public function assemble()
-    {
-        echo 'Android сборка';
-    }
-
-    public function deploy()
-    {
-        echo 'Развертывание сборки на сервере';
-    }
+```kt
+class AndroidBuilder : Builder() {
+    override fun test() = println("Запуск Android тестов")
+    override fun lint() = println("Копирование Android кода")
+    override fun assemble() = println("Android сборка")
+    override fun deploy() = println("Развертывание сборки на сервере")
 }
 
-class IosBuilder extends Builder
-{
-    public function test()
-    {
-        echo 'Запуск iOS тестов';
-    }
-
-    public function lint()
-    {
-        echo 'Копирование iOS кода';
-    }
-
-    public function assemble()
-    {
-        echo 'iOS сборка';
-    }
-
-    public function deploy()
-    {
-        echo 'Развертывание сборки на сервере';
-    }
+class IosBuilder : Builder() {
+    override fun test() = println("Запуск iOS тестов")
+    override fun lint() = println("Копирование iOS кода")
+    override fun assemble() = println("iOS сборка")
+    override fun deploy() = println("Развертывание сборки на сервере")
 }
+```
+
 Пример использования:
 
-$androidBuilder = new AndroidBuilder();
-$androidBuilder->build();
+```kt
+fun main() {
+    var androidBuilder = AndroidBuilder()
+    androidBuilder.build()
 
-// Вывод:
-// Запуск Android тестов
-// Копирование Android кода
-// Android сборка
-// Развертывание сборки на сервере
+    var iosBuilder = IosBuilder()
+    iosBuilder.build()
+}
+```
 
-$iosBuilder = new IosBuilder();
-$iosBuilder->build();
-
-// Вывод:
-// Запуск iOS тестов
-// Копирование iOS кода
-// iOS сборка
-// Развертывание сборки на сервере
+```
+Запуск Android тестов
+Копирование Android кода
+Android сборка
+Развертывание сборки на сервере
+Запуск iOS тестов
+Копирование iOS кода
+iOS сборка
+Развертывание сборки на сервере
+```
 
 [содержание](/readme.md)  
