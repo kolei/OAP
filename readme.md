@@ -33,4 +33,6 @@
 
 - Выполнение команд ОС. Разбор stdout (pipe или перенаправление в файл)
 
+- [Знакомство с Visual Studio Code. Настройка. Выполнение и отладка кода.](/articles/vsc.md)
+
 [1]: https://younglinux.info/python/for.php
