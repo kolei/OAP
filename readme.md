@@ -35,4 +35,10 @@
 
 + [Знакомство с Visual Studio Code. Настройка. Выполнение и отладка кода.](/articles/vsc.md)
 
+---
+
+Лабораторные работы:
+
+- [Лабораторная №1. Линейные алгоритмы.](/articles/lab1.md)
+
 [1]: https://younglinux.info/python/for.php
