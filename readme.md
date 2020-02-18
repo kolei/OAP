@@ -40,5 +40,6 @@
 Лабораторные работы:
 
 - [Лабораторная №1. Линейные алгоритмы.](/articles/lab1.md)
+- [Лабораторная №2. Ветвления.](/articles/lab2.md)
 
 [1]: https://younglinux.info/python/for.php
