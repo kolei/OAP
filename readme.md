@@ -72,8 +72,9 @@ https://kotlinlang.org/api/latest/jvm/stdlib/index.html
 
 # Лабораторные работы
 
-+ [Лабораторная №1](/articles/lab1.md)
-+ [Лабораторная №2](/articles/lab2.md)
++ [Лабораторная №1. Линейные алгоритмы.](/articles/lab1.md)
++ [Лабораторная №2. Ветвления.](/articles/lab2.md)
++ [Лабораторная №3. Циклы.](/articles/lab3.md)
 
 
 [создание проекта с gradle](https://kotlinlang.org/docs/tutorials/coroutines/coroutines-basic-jvm.html)
