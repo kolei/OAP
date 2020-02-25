@@ -25,7 +25,7 @@
 
 + [Параметры командной строки.](/articles/command_line_params.md)
 
-- Работа с файлами.
++ [Работа с файлами.](/articles/files.md)
 
 - HTTP-клиент, Request, Responce, Форматы JSON, XML... .
 
@@ -41,7 +41,6 @@
 
 - [Лабораторная №1. Линейные алгоритмы.](/articles/lab1.md)
 - [Лабораторная №2. Ветвления.](/articles/lab2.md)
-
 - [Лабораторная №3. Циклы.](/articles/lab3.md)
 
 [1]: https://younglinux.info/python/for.php
