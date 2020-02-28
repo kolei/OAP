@@ -27,7 +27,7 @@
 
 + [Работа с файлами.](/articles/files.md)
 
-- HTTP-клиент, Request, Responce, Форматы JSON, XML... .
++ [HTTP-клиент, Request, Responce, Форматы JSON, XML...](/articles/http.md)
 
 - Регулярные выражения.
 
