@@ -77,7 +77,7 @@ nginx
 
 Стандартная библиотека:
 
-'''py
+```py
 import urllib.request
 password_mgr = urllib.request.HTTPPasswordMgrWithDefaultRealm()
 top_level_url = 'https://httpbin.org/basic-auth/user/passwd'
