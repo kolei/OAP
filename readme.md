@@ -42,5 +42,6 @@
 - [Лабораторная №1. Линейные алгоритмы.](/articles/lab1.md)
 - [Лабораторная №2. Ветвления.](/articles/lab2.md)
 - [Лабораторная №3. Циклы.](/articles/lab3.md)
+- [Лабораторная №4. (4ч) Функции. Исключения.](/articles/lab4.md)
 
 [1]: https://younglinux.info/python/for.php
