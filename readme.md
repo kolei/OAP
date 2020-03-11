@@ -76,6 +76,7 @@ https://kotlinlang.org/api/latest/jvm/stdlib/index.html
 + [Лабораторная №2. Ветвления.](/articles/lab2.md)
 + [Лабораторная №3. Циклы.](/articles/lab3.md)
 + [Лабораторная №4. Функции. Исключения.](/articles/lab4.md)
++ [Лабораторная №5. Регулярные выражения.](/articles/lab5.md)
 
 
 [создание проекта с gradle](https://kotlinlang.org/docs/tutorials/coroutines/coroutines-basic-jvm.html)
