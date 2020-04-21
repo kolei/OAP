@@ -72,13 +72,17 @@ https://kotlinlang.org/api/latest/jvm/stdlib/index.html
 
 # Лабораторные работы
 
-+ [Лабораторная №1. Линейные алгоритмы.](/articles/lab1.md)
-+ [Лабораторная №2. Ветвления.](/articles/lab2.md)
-+ [Лабораторная №3. Циклы.](/articles/lab3.md)
-+ [Лабораторная №4. Функции. Исключения.](/articles/lab4.md)
-+ [Лабораторная №5. Регулярные выражения.](/articles/lab5.md)
-+ [Лабораторная №6. Потоки.](/articles/lab6-threads.md)
-
+1. [Линейные алгоритмы.](/articles/lab1.md)
+2. [Ветвления.](/articles/lab2.md)
+3. [Циклы.](/articles/lab3.md)
+4. [Функции. Исключения.](/articles/lab4.md)
+5. [Регулярные выражения.](/articles/lab5.md)
+6. [Потоки.](/articles/lab6-threads.md)
+7. [Асинхронные вычисления.](/articles/lab6-async.md)
+8. [ООП. Основы.](/articles/lab8-oop.md)
+9. [ООП. Классы.](/articles/lab8-oop2.md)
+10. [ООП. Наследование.](/articles/lab8-oop3.md)
+11. [ООП. Наследование 2.](/articles/lab8-oop4.md)
 
 [создание проекта с gradle](https://kotlinlang.org/docs/tutorials/coroutines/coroutines-basic-jvm.html)
 
