@@ -84,6 +84,9 @@ https://kotlinlang.org/api/latest/jvm/stdlib/index.html
 10. [ООП. Наследование.](/articles/lab8-oop3.md)
 11. [ООП. Наследование 2.](/articles/lab8-oop4.md)
 
+[_]: https://studfile.net/preview/6845209/ "ООП. Шаблоны проектирования"
+[_]: http://it-claim.ru/Education/Course/ISDevelopment/Lab3_tutorial.pdf "Шаблоны проектирования."
+
 [создание проекта с gradle](https://kotlinlang.org/docs/tutorials/coroutines/coroutines-basic-jvm.html)
 
 ## [Экзаменационные билеты](/articles/tickets.md)
