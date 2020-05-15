@@ -84,7 +84,10 @@ https://kotlinlang.org/api/latest/jvm/stdlib/index.html
 10. [ООП. Наследование.](/articles/lab8-oop3.md)
 11. [ООП. Наследование 2.](/articles/lab8-oop4.md)
 12. [ООП. Шаблоны проектирования](/articles/lab-templates.md)
+<<<<<<< HEAD
 13. [Системы контроля версий](/articles/lab-skv.md)
+=======
+>>>>>>> 135e5f72a4c4f18e0c408a5a5ea2f91742184bee
 
 [_]: https://studfile.net/preview/6845209/ "ООП. Шаблоны проектирования"
 [_]: http://it-claim.ru/Education/Course/ISDevelopment/Lab3_tutorial.pdf "Шаблоны проектирования."
