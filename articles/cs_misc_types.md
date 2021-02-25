@@ -1,9 +1,9 @@
-<table style="width: 100%;"><tr><td style="width: 40%;"><a href="../articles/4_prog_string.md">
-Строки
-</a></td><td style="width: 20%;"><a href="../readme.md">
-Содержание
-</a></td><td style="width: 40%;"><a href="../articles/t4l5">
-...
+<table style="width: 100%;"><tr><td style="width: 40%;">
+<a href="../articles/4_prog_string.md">Строки
+</a></td><td style="width: 20%;">
+<a href="../readme.md">Содержание
+</a></td><td style="width: 40%;">
+<a href="../articles/t5_function.md">Функции
 </a></td><tr></table>
 
 # Перечисления. Множества. Работа с датами. Кортежи.

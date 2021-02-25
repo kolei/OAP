@@ -1,9 +1,9 @@
-<table style="width: 100%;"><tr><td style="width: 40%;"><a href="../articles/t3l1_3.md">
-Массивы
-</a></td><td style="width: 20%;"><a href="../readme.md">
-Содержание
-</a></td><td style="width: 40%;"><a href="../articles/t4l5">
-Множества. Кортежи и другие типы данных...
+<table style="width: 100%;"><tr><td style="width: 40%;">
+<a href="../articles/t3l1_3.md">Массивы
+</a></td><td style="width: 20%;">
+<a href="../readme.md">Содержание
+</a></td><td style="width: 40%;">
+<a href="../articles/cs_misc_types">Множества. Кортежи. Работа с типом DataTime.
 </a></td><tr></table>
 
 # Строки. Объявление строковых типов данных. Поиск, удаление, замена и добавление символов в строке. Операции со строками. Стандартные функции и процедуры работы со строками.

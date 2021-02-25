@@ -1,3 +1,11 @@
+<table style="width: 100%;"><tr><td style="width: 40%;">
+<a href="../articles/t2l2.md">Методы программирования
+</a></td><td style="width: 20%;">
+<a href="../readme.md">Содержание
+</a></td><td style="width: 40%;">
+<a href="../articles/t3l1.md">Программирование на языке C#. Основные элементы языка.
+</a></td><tr></table>
+
 # Системы контроля версий
 
 ## Что такое контроль версий, и зачем он нужен? 
