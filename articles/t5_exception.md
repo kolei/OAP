@@ -3,7 +3,7 @@
 </a></td><td style="width: 20%;">
 <a href="../readme.md">Содержание
 </a></td><td style="width: 40%;">
-<a href="../articles/t5_exception.md">Исключения.
+<a href="../articles/t5_files.md">Работа с файлами.
 </a></td><tr></table>
 
 <!-- https://metanit.com/sharp/tutorial/2.14.php -->
@@ -1092,3 +1092,11 @@ User user = new User();
 string companyName = user?.Phone?.Company?.Name ?? "не установлено";
 Console.WriteLine(companyName);
 ```
+
+<table style="width: 100%;"><tr><td style="width: 40%;">
+<a href="../articles/t5_delegate.md">Делегаты, события, лямбды.
+</a></td><td style="width: 20%;">
+<a href="../readme.md">Содержание
+</a></td><td style="width: 40%;">
+<a href="../articles/t5_files.md">Работа с файлами.
+</a></td><tr></table>
