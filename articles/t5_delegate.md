@@ -3,7 +3,7 @@
 </a></td><td style="width: 20%;">
 <a href="../readme.md">Содержание
 </a></td><td style="width: 40%;">
-<a href="../articles/t5_delegate.md">Делегаты, события и лямбды.
+<a href="../articles/t5_exception.md">Исключения.
 </a></td><tr></table>
 
 # Делегаты, события и лямбды.
@@ -782,3 +782,10 @@ if (func(i))
 int result2 = Sum(integers, x => x % 2 == 0);
 ```
 
+<table style="width: 100%;"><tr><td style="width: 40%;">
+<a href="../articles/t5_function.md">Методы
+</a></td><td style="width: 20%;">
+<a href="../readme.md">Содержание
+</a></td><td style="width: 40%;">
+<a href="../articles/t5_exception.md">Исключения.
+</a></td><tr></table>
