@@ -3,10 +3,8 @@
 </a></td><td style="width: 20%;">
 <a href="../readme.md">Содержание
 </a></td><td style="width: 40%;">
-<a href="../articles/t5_file_types.md">Типы файлов.
+<a href="../articles/t5_thread_async.md">Многопоточность. Потоки, асинхронные вычисления
 </a></td><tr></table>
-
-
 
 # Работа с потоками и файловой системой
 
@@ -1054,5 +1052,5 @@ using (FileStream fs = new FileStream("people.dat", FileMode.OpenOrCreate))
 </a></td><td style="width: 20%;">
 <a href="../readme.md">Содержание
 </a></td><td style="width: 40%;">
-<a href="../articles/t5_file_types.md">Типы файлов.
+<a href="../articles/t5_thread_async.md">Многопоточность. Потоки, асинхронные вычисления
 </a></td><tr></table>

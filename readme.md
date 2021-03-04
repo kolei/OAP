@@ -109,11 +109,14 @@
 
 4. [Работа с файловой системой и файлами.](./articles/t5_files.md)
 
-5. [Типы файлов. CSV, XML, JSON, PDF](./articles/t5_file_types.md)
+5. [Многопоточность. Потоки, асинхронные вычисления](./articles/t5_thread_async.md)
+
+6. [Типы файлов. CSV, XML, JSON](./articles/t5_file_types.md)
+
+<!-- отчеты, PDF -->
 
 7. [Стандартная библиотека. Подключение не стандартных библиотек.](/articles/t4l3.md)
 
-[Kotlin Standard Library]: https://kotlinlang.org/api/latest/jvm/stdlib/index.html
 
 **Лабораторные работы**
 
