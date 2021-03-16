@@ -1,4 +1,10 @@
-[содержание](/readme.md)  
+<table style="width: 100%;"><tr><td style="width: 40%;">
+<a href="../articles/t5_file_types.md">Форматы файлов
+</a></td><td style="width: 20%;">
+<a href="../readme.md">Содержание
+</a></td><td style="width: 40%;">
+<a href="../articles/t6_oop1.md">Основы ООП
+</a></td><tr></table>
 
 # Регулярные выражения
 
@@ -318,3 +324,11 @@ string result = regex.Replace(s, target);
 ```
 
 Данная версия метода *Replace* принимает два параметра: строку с текстом, где надо выполнить замену, и сама строка замены. Так как в качестве шаблона выбрано выражение "\s+ (то есть наличие одного и более пробелов), метод Replace проходит по всему тексту и заменяет несколько подряд идущих пробелов ординарными.
+
+<table style="width: 100%;"><tr><td style="width: 40%;">
+<a href="../articles/t5_file_types.md">Форматы файлов
+</a></td><td style="width: 20%;">
+<a href="../readme.md">Содержание
+</a></td><td style="width: 40%;">
+<a href="../articles/t6_oop1.md">Основы ООП
+</a></td><tr></table>
