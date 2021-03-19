@@ -148,18 +148,18 @@
 
 1. [История развития ООП. Базовые понятия: объект, его свойства и методы, класс, интерфейс. Основные принципы ООП: инкапсуляция, наследование, полиморфизм.](./articles/t6_oop1.md)
 
+2. [LINQ](./articles/t6_linq.md)
 
-
-
-3. [Шаблоны проектирования. Порождающие шаблоны.](/articles/oop_templates_p1.md)
+<!-- 3. [Шаблоны проектирования. Порождающие шаблоны.](/articles/oop_templates_p1.md)
 
 4. [... Структурные шаблоны.](/articles/oop_templates_p2.md)
 
-5. [... Поведенческие шаблоны.](/articles/oop_templates_p3.md)
+5. [... Поведенческие шаблоны.](/articles/oop_templates_p3.md) -->
 
 **Лабораторные работы**
 
 1. [ООП. Основы.](./articles/lab8-oop.md)
+2. [ООП. Наследование.](./articles/lab8-oop3.md)
 
 <!-- 2. [ООП. Классы.](/articles/lab8-oop2.md)
 3. Перегрузка операторов
@@ -167,7 +167,6 @@
 5. [ООП. Наследование 2.](/articles/lab8-oop4.md)
 6. [ООП. Шаблоны проектирования](/articles/lab-templates.md) -->
 
-[10 + 12 => 60 + 52]: _
 
 <!-- Перенести в конец к оконным приложениям 7. [Стандартная библиотека. Подключение не стандартных библиотек.](/articles/t4l3.md) -->
 <!-- подключить графики или отчеты: WF и стороннюю либу NuGet -->
@@ -194,11 +193,6 @@
 [Шаблоны проектирования]: http://it-claim.ru/Education/Course/ISDevelopment/Lab3_tutorial.pdf
 
 [создание проекта с gradle]: https://kotlinlang.org/docs/tutorials/coroutines/coroutines-basic-jvm.html
-
-
-[_]: https://github.com/latyshevich/education/wiki/%D0%9B%D0%B0%D0%B1%D0%BE%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BD%D0%B0%D1%8F-%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0-%E2%84%961-(%D0%9E%D0%9E%D0%9F) "Лабораторные по ООП"
-
-[_]: https://studfile.net/preview/2497114/page:2/ "Лабы ООП"
 
 <!--  
 
