@@ -3,7 +3,7 @@
 </a></td><td style="width: 20%;">
 <a href="../readme.md">Содержание
 </a></td><td style="width: 40%;">
-<a href="../articles/t6_linq.md">LINQ
+<a href="../articles/t6_templates.md">Шаблоны проектирования
 </a></td><tr></table>
 
 # LINQ
@@ -452,3 +452,11 @@ Sam - 43
 Tom - 21
 Tom - 33
 ```
+
+<table style="width: 100%;"><tr><td style="width: 40%;">
+<a href="../articles/t6_oop1.md">ООП
+</a></td><td style="width: 20%;">
+<a href="../readme.md">Содержание
+</a></td><td style="width: 40%;">
+<a href="../articles/t6_templates.md">Шаблоны проектирования
+</a></td><tr></table>
