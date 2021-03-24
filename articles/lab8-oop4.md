@@ -19,11 +19,14 @@ class Berdanka : IWeapon
 }
 
 // еще один класс, реализующий интерфейс
-class Rogatka : IWeapon
+class Палка : IWeapon
 {
     public override void Fire()
     {
-        Console.WriteLine("Пиу");
+        if(прошёл_год)
+            Console.WriteLine("Раз в год и палка стреляет!");
+        else
+            Console.WriteLine("Я просто палка");
     }
 }
 
@@ -31,14 +34,13 @@ class Transformer
 {
     // у трансформера есть свойство СуперОружие типа IWeapon (т.е. может стрелять)
     IWeapon SuperWeapon;
-    ...
+
     public Transformer()
     {
         // на складе выдали берданку
         SuperWeapon = new Berdanka();
     }
 
-    // 
     public void Attack()
     {
         SuperWeapon.Fire();
