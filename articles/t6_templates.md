@@ -1592,6 +1592,8 @@ iOS сборка
 Развертывание сборки на сервере
 ```
 
+---
+
 <table style="width: 100%;"><tr><td style="width: 40%;">
 <a href="../articles/t6_linq.md">LINQ
 </a></td><td style="width: 20%;">
