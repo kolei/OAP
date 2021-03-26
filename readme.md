@@ -138,8 +138,18 @@
 
 ## Тема 8. Оконные приложения.
 
-1. [Обзор типов оконных приложений в C#. Знакомство со структорой проекта WPF. Grid.](./articles/t8_win_app.md)
+1. [Обзор типов оконных приложений в C#. Знакомство со структорой проекта WPF. Компоновка.](./articles/t8_win_app.md)
 
+2. [Элементы управления. Обзор.](./articles/t8_elements.md)
+
+<!-- https://professorweb.ru/my/WPF/base_WPF/level1/info_WPF.php -->
+
+
+<!-- 
+
+MVVM вроде попроще
+
+https://streletzcoder.ru/realizatsiya-patterna-mvvm-na-primere-c-wpf-nestrogiy-variant/ -->
 
 <!-- Перенести в конец к оконным приложениям 7. [Стандартная библиотека. Подключение не стандартных библиотек.](/articles/t4l3.md) -->
 <!-- подключить графики или отчеты: WF и стороннюю либу NuGet -->
