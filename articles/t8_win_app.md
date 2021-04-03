@@ -1,3 +1,12 @@
+<table style="width: 100%;"><tr><td style="width: 40%;">
+<a href="../articles/t7_dll.md">Библиотеки классов
+</a></td><td style="width: 20%;">
+<a href="../readme.md">Содержание
+</a></td><td style="width: 40%;">
+<a href="../articles/t8_binding.md">Привязка (Binding)
+</a></td><tr></table>
+
+
 # Обзор типов оконных приложений в C#. Знакомство со структорой проекта WPF. Компоновка.
 
 <!-- https://metanit.com/sharp/wpf/1.php -->
@@ -711,3 +720,11 @@ xmlns:sys="clr-namespace:System;assembly=mscorlib"
     VerticalAlignment="Top" 
     Grid.ColumnSpan="3"/>
 ```
+
+<table style="width: 100%;"><tr><td style="width: 40%;">
+<a href="../articles/t7_dll.md">Библиотеки классов
+</a></td><td style="width: 20%;">
+<a href="../readme.md">Содержание
+</a></td><td style="width: 40%;">
+<a href="../articles/t8_binding.md">Привязка (Binding)
+</a></td><tr></table>

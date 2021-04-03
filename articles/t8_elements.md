@@ -1,3 +1,12 @@
+<table style="width: 100%;"><tr><td style="width: 40%;">
+<a href="../articles/t8_binding.md">Привязка (Binding)
+</a></td><td style="width: 20%;">
+<a href="../readme.md">Содержание
+</a></td><td style="width: 40%;">
+<a href="../articles/t8_elements.md">Элементы управления
+</a></td><tr></table>
+
+
 # Элементы управления
 
 ## Обзор элементов управления и их свойств
