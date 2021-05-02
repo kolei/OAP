@@ -185,6 +185,20 @@
 <!-- https://professorweb.ru/my/WPF/base_WPF/level1/info_WPF.php -->
 
 
+
+ <!-- 
+ 
+ вывод "плиткой" от WorldSkills
+ 
+ https://nationalteam.worldskills.ru/skills/sozdanie-spiskov-listview-poisk-i-filtratsiya-dannykh/ 
+ 
+
+там же есть рисование графиков и работа с вордом
+
+https://nationalteam.worldskills.ru/skills/programmnye-resheniya-dlya-biznesa/
+
+-->
+
 <!-- 
 
 MVVM вроде попроще
