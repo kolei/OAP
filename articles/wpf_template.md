@@ -36,6 +36,11 @@
         <ColumnDefinition/>
     </Grid.ColumnDefinitions>
 
+    <!-- типа логотип компании -->
+    <Image 
+            Source="./Img/simon.png" 
+            Grid.RowSpan="2"/>
+
     <StackPanel 
         Orientation="Vertical"
         Grid.RowSpan="3"
