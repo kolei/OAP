@@ -118,7 +118,7 @@
     }
     ```
 
-3. В коде окна (`MainWindow.xaml.cs`) создадим переменную типа **IDataProvider**, создадим экземпляр класса **LocalDataProvider** и сохраним список кошек в свойстве **CatList**
+3. В коде окна (`MainWindow.xaml.cs`) создадим переменную типа **IDataProvider**, присвоим ей экземпляр класса **LocalDataProvider** и сохраним список кошек в свойстве **CatList**
 
     ```cs
     public IEnumerable<Cat> CatList { get; set; }
