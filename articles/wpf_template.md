@@ -3,7 +3,7 @@
 </a></td><td style="width: 20%;">
 <a href="../readme.md">Содержание
 </a></td><td style="width: 40%;">
-<a href="../articles/t8_elements.md">Элементы управления
+<a href="../articles/wpf_filtering.md">Фильтрация данных
 </a></td><tr></table>
 
 # Каркас приложения. Модель данных. Привязка данных. Табличный вывод.
@@ -187,3 +187,11 @@
 Приложение должно выглядеть примерно так:
 
 ![](../img/08035.png)
+
+<table style="width: 100%;"><tr><td style="width: 40%;">
+<a href="../articles/t8_elements.md">Элементы управления
+</a></td><td style="width: 20%;">
+<a href="../readme.md">Содержание
+</a></td><td style="width: 40%;">
+<a href="../articles/wpf_filtering.md">Фильтрация данных
+</a></td><tr></table>
