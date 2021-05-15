@@ -118,18 +118,28 @@
     }
     ```
 
-3. В коде окна (`MainWindow.xaml.cs`) создадим переменную типа **IDataProvider**, присвоим ей экземпляр класса **LocalDataProvider** и сохраним список кошек в свойстве **CatList**
+4. В простарнстве имен проекта создадим класс **Globals**, в котором объявим публичную статическую переменную *dataProvider* типа **IDataProvider**:
+
+    ```cs
+    class Globals
+    {
+        public static IDataProvider dataProvider;
+    }
+    ```
+
+    Это нужно, чтобы поставщик данных был виден в любом месте проекта. 
+
+3. В конструкторе главного окна (`MainWindow.xaml.cs`) присвоим глобальной переменной *dataProvider* экземпляр класса **LocalDataProvider** и сохраним список кошек в свойстве **CatList**
 
     ```cs
     public IEnumerable<Cat> CatList { get; set; }
-    private IDataProvider dataProvider;
-
+   
     public MainWindow()
     {
         InitializeComponent();
         DataContext = this;
-        dataProvider = new LocalDataProvider();
-        CatList = dataProvider.GetCats();
+        Globals.dataProvider = new LocalDataProvider();
+        CatList = Globals.dataProvider.GetCats();
     }
 
     private void ExitButton_Click(object sender, RoutedEventArgs e)
