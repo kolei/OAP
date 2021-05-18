@@ -3,7 +3,7 @@
 </a></td><td style="width: 20%;">
 <a href="../readme.md">Содержание
 </a></td><td style="width: 40%;">
-<a href="../articles/wpf_filtering.md">Фильтрация данных
+<a href="../articles/wpf_search_sort.md">Поиск, сортировка
 </a></td><tr></table>
 
 # Фильтрация данных
@@ -165,7 +165,7 @@ public IEnumerable<Cat> CatList {
 2. Затем создадим список и переменную для хранения выбранного элемента списка. Обратите внимание, тут мы храним не строку, а весь объект.
 
     ```cs
-    public CatAge SelectedAge = null;
+    private CatAge SelectedAge = null;
     public IEnumerable<CatAge> CatAgeList { get; set; } = new CatAge[]{
         new CatAge{Title="Все возраста", AgeFrom=0, AgeTo=99},
         new CatAge{Title="Котята", AgeFrom=0, AgeTo=1},
@@ -199,7 +199,7 @@ public IEnumerable<Cat> CatList {
     ```cs
     private void BreedFilterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        SelectedAge = BreedFilterComboBox.SelectedItem as CatBreed;
+        SelectedAge = BreedFilterComboBox.SelectedItem as CatAge;
         Invalidate();
     }
     ```
@@ -213,3 +213,11 @@ public IEnumerable<Cat> CatList {
             .Where(c=>(c.Age>=SelectedAge.AgeFrom && c.Age<SelectedAge.AgeTo));
     }
     ```
+
+<table style="width: 100%;"><tr><td style="width: 40%;">
+<a href="../articles/wpf_template.md">Каркас приложения. Модель данных. Привязка данных. Табличный вывод.
+</a></td><td style="width: 20%;">
+<a href="../readme.md">Содержание
+</a></td><td style="width: 40%;">
+<a href="../articles/wpf_search_sort.md">Поиск, сортировка
+</a></td><tr></table>    
