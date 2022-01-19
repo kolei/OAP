@@ -25,7 +25,7 @@ https://github.com/kolei/OAP/tree/python_c21
 
 [4/0]: _
 
-2. [Языки программирования. Знакомство с Visual Studio Code. Настройка VSC. Выполнение и отладка кода.](articles/l2.md)
+2. [Языки программирования. Знакомство с Visual Studio Code. Настройка VSC. Выполнение и отладка кода.](./articles/l2.md)
 
 [//TODO тут очень мало, налить воды про алгоритмы]: _
 
@@ -65,7 +65,7 @@ https://github.com/kolei/OAP/tree/python_c21
 
 Лабораторные работы:
 
-1. Знакомство с Visual Studio Code.
+1. [Знакомство с Visual Studio Code](./articles/lab_vsc.md)
 2. [Линейные алгоритмы.](/articles/lab1.md)
 3. [Ветвления.](/articles/lab2.md)
 4. [Циклы.](/articles/lab3.md)
