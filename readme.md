@@ -65,12 +65,9 @@ https://github.com/kolei/OAP/tree/python_c21
 
 Лабораторные работы:
 
-1. [Знакомство с Visual Studio Code](./articles/lab_vsc.md)
-2. [Линейные алгоритмы.](/articles/lab1.md)
-3. [Ветвления.](/articles/lab2.md)
-4. [Циклы.](/articles/lab3.md)
-5. [Функции. Исключения.](/articles/lab4.md)
-6. Регулярные выражения.
-7. HTTP-клиент, Request, Responce.
+1. [Знакомство с Visual Studio Code. Линейные алгоритмы.](./articles/lab_vsc.md)
+2. [Ветвления.](/articles/lab2.md)
+3. [Циклы.](/articles/lab3.md)
+4. [Функции. Исключения.](/articles/lab4.md)
 
 [1]: https://younglinux.info/python/for.php
