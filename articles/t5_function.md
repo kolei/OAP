@@ -3,7 +3,7 @@
 </a></td><td style="width: 20%;">
 <a href="../readme.md">Содержание
 </a></td><td style="width: 40%;">
-<a href="../articles/t5_delegate.md">Делегаты, события и лямбды.
+<a href="../articles/t5_exception.md">Исключения. Null.
 </a></td><tr></table>
 
 # Общие сведения о подпрограммах. Определение и вызов подпрограмм. Область видимости и время жизни переменной. Механизм передачи параметров. 
@@ -794,3 +794,10 @@ class Program
 
 При объявлении переменных также надо учитывать, что в одном контексте нельзя определить несколько переменных с одним и тем же именем.
 
+<table style="width: 100%;"><tr><td style="width: 40%;">
+<a href="../articles/cs_misc_types.md">Перечисления. Множества. Работа с датами. Кортежи.
+</a></td><td style="width: 20%;">
+<a href="../readme.md">Содержание
+</a></td><td style="width: 40%;">
+<a href="../articles/t5_exception.md">Исключения. Null.
+</a></td><tr></table>
