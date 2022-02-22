@@ -36,8 +36,12 @@
 Элемент строки (символ) можно получить по индексу (в этом смысле строка является одномерным массивом):
 
 ```cs
-Console.WriteLine("6й символ - '{1}'",
-    Stroka[5]);
+var Stroka = "ABCDEF";
+for(int i=0;i<Stroka.Length;i++)
+{
+    Console.WriteLine("{1}й символ - '{2}'",
+        i, Stroka[i]);
+}
 ```    
 
 
