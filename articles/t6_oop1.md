@@ -3,7 +3,7 @@
 </a></td><td style="width: 20%;">
 <a href="../readme.md">Содержание
 </a></td><td style="width: 40%;">
-<a href="../articles/t6_linq.md">LINQ
+<a href="../articles/t6_oop_habr.md">Ещё раз про классы. Интерфейсы.
 </a></td><tr></table>
 
 # Тема 6. Основные принципы объектно-ориентированного программирования
@@ -2170,5 +2170,5 @@ class Rectangle : Figure
 </a></td><td style="width: 20%;">
 <a href="../readme.md">Содержание
 </a></td><td style="width: 40%;">
-<a href="../articles/t6_linq.md">LINQ
+<a href="../articles/t6_oop_habr.md">Ещё раз про классы. Интерфейсы.
 </a></td><tr></table>
