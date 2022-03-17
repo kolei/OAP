@@ -45,6 +45,7 @@ namespace HelloApp
     {
         static void Main(string[] args)
         {
+            // формируем набор данных
             var Users = new List<Person>
             {
                 new Person {FirstName="Том", BirthDay=new DateTime(2002,1,31)},
