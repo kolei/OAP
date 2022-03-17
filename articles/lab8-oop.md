@@ -33,7 +33,7 @@ var DateDiff = new TimeSpan(33, 0, 0);
 ```cs
 namespace HelloApp
 {
-    // описываем новый класс
+    // описываем новый класс в пространстве имен (namespace)
     class Person
     {
         // используем CamelCase - все слова (в переменных и методах) с большой буквы
@@ -45,7 +45,7 @@ namespace HelloApp
     {
         static void Main(string[] args)
         {
-            // формируем набор данных
+            // формируем набор данных (список объектов вашего типа)
             var Users = new List<Person>
             {
                 new Person {FirstName="Том", BirthDay=new DateTime(2002,1,31)},
