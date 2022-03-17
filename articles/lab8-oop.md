@@ -28,6 +28,35 @@ var BirthDay = new DateTime(2002, 1, 31);
 var DateDiff = new TimeSpan(33, 0, 0);
 ```
 
+Напоминаю структуру проекта:
+
+```cs
+namespace HelloApp
+{
+    // описываем новый класс
+    class Person
+    {
+        // используем CamelCase - все слова (в переменных и методах) с большой буквы
+        public string FirstName;
+        public DateTime BirthDay;
+    }
+    // существующий класс не трогаем
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var Users = new List<Person>
+            {
+                new Person {FirstName="Том", BirthDay=new DateTime(2002,1,31)},
+                new Person {FirstName="Боб", BirthDay=new DateTime(2004,12,1)}
+            };
+
+            // дальше LINQ-запросы
+        }
+    }
+}
+```
+
 1. **Student**: Фамилия, Имя, Отчество, Дата рождения, Адрес, Телефон, Факультет, Курс. Данные загрузить из CSV-файла. Вывести:
     * список студентов заданного факультета; 
     * списки студентов для каждого факультета и курса;
