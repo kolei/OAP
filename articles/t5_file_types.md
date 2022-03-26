@@ -1080,6 +1080,40 @@ using(var sr = new StreamReader("test.json"))
     ...
 ```
 
+## Вариант попроще
+
+Можно использовать не только "голый" **.NET Framework**, но и библиотеки из других компонентов **Visual Studio**.
+
+В пространстве имён **System.Web.Script.Serialization** есть класс **JavaScriptSerializer**, который выглядит попроще чем классическая реализация:
+
+>В пакет разработки C# не входит библиотека **System.Web.Extensions** (в которой и находится **System.Web.Script.Serialization**). Нужно в "Обозревателе решений" добавить в "Ссылки" библиотеку *Сборки -> Платформа -> System.Web.Extensions*
+
+```cs
+// целевые классы нам по прежнему нужны, но уже без всяких аннотаций
+internal class MaterialTC
+{
+    public string Title { get; set; }
+    public int Count { get; set; }
+}
+
+internal class Notice
+{
+    public Material[] data;
+}
+
+internal class Answer
+{
+    public Notice notice;
+}
+
+
+// в месте, где нам нужно распарсить JSON создаем сериализатор и разбираем строку
+var serializer = new JavaScriptSerializer();
+var answer = serializer.Deserialize<Answer>("тут ваша JSON-строка");
+
+// и ВСЁ
+```
+
 <table style="width: 100%;"><tr><td style="width: 40%;">
 <a href="../articles/t5_thread_async.md">Многопоточность
 </a></td><td style="width: 20%;">
