@@ -34,7 +34,7 @@
     ```cs
     var buffer = File.ReadAllText("тут имя вашего файла");
     var serializer = new JavaScriptSerializer();
-    var materialList = serializer.Deserialize<Student[]>(buffer);
+    var studentList = serializer.Deserialize<Student[]>(buffer);
     ...
     ```
 
