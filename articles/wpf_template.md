@@ -20,7 +20,7 @@
 
 * В середине второй колонки (3) будет расположен основной список с данными: элементы **DataGrid** или **ListView**
 
-* В нижней строке второй колонки (4) будем располагать счётчики, пагинаторы и т.п.
+* В нижней строке второй колонки (4) в перспективе будем располагать счётчики, пагинаторы и т.п. (высота тоже "auto")
 
 Разметка выглядит так:
 
@@ -29,7 +29,7 @@
     <Grid.RowDefinitions>
         <RowDefinition Height="auto"/>
         <RowDefinition />
-        <RowDefinition Height="50"/>
+        <RowDefinition Height="auto"/>
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
         <ColumnDefinition Width="200"/>
