@@ -152,7 +152,7 @@
 
 **Лабораторные работы**
 
-1. [ООП. Основы.](./articles/lab8-oop.md)
+1. [ООП. Основы.](./articles/lab8-oop1.md)
 2. [ООП. Основы (CSV)](./articles/lab8-oop2.md)
 3. [ООП. Основы (JSON)](./articles/lab8-oop-json.md)
 4. [ООП. Наследование.](./articles/lab8-oop3.md)<!-- 4(38) -->
