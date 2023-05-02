@@ -1,10 +1,4 @@
-<table style="width: 100%;"><tr><td style="width: 40%;">
-<a href="../articles/wpf_filtering.md">Фильтрация данных
-</a></td><td style="width: 20%;">
-<a href="../readme.md">Содержание
-</a></td><td style="width: 40%;">
-<a href="../articles/wpf_filtering.md">Фильтрация данных
-</a></td><tr></table>
+[Фильтрация данных](./wpf_filtering.md) | [Содержание](../readme.md#тема-8-оконные-приложения)
 
 # Поиск, сортировка
 
@@ -28,11 +22,11 @@
 2. В коде окна создаем переменную для хранения строки поиска и запоминаем её в обработчике ввода текста (SearchFilter_KeyUp)
 
     ```cs
-    private string SearchFilter = ""; 
+    private string searchFilter = ""; 
 
     private void SearchFilter_KeyUp(object sender, KeyEventArgs e)
     {
-        SearchFilter = SearchFilterTextBox.Text;
+        searchFilter = SearchFilterTextBox.Text;
         Invalidate();
     }
     ```
@@ -43,14 +37,16 @@
     get
     {
         // сохраняем во временную переменную полный список
-        var res = _CatList;
+        var res = _catList;
 
         // фильтруем по возрасту
-        res = res.Where(c=>(c.Age>=SelectedAge.AgeFrom && c.Age<SelectedAge.AgeTo));
+        res = res.Where(c=>(c.Age>=selectedAge.ageFrom && c.Age<selectedAge.ageTo));
 
         // если фильтр не пустой, то ищем ВХОЖДЕНИЕ подстроки поиска в кличке без учета регистра
         if(SearchFilter != "")
-            res = res.Where(c => c.Name.IndexOf(SearchFilter, StringComparison.OrdinalIgnoreCase) >= 0);
+            res = res.Where(c => c.Name.IndexOf(
+                searchFilter, 
+                StringComparison.OrdinalIgnoreCase) >= 0);
 
         return res;
     }
@@ -88,11 +84,11 @@
 2. В коде добавляем переменную для хранения варианта сортировки и обработчик смены варианта сортировки
 
     ```cs
-    private bool SortAsc = true;
+    private bool sortAsc = true;
 
     private void RadioButton_Checked(object sender, RoutedEventArgs e)
     {
-        SortAsc = (sender as RadioButton).Tag.ToString() == "1";
+        sortAsc = (sender as RadioButton).Tag.ToString() == "1";
         Invalidate();
     }
     ```
@@ -101,8 +97,10 @@
 
     ```cs
     ...
-    if (SortAsc) res = res.OrderBy(c=>c.Age);
+    if (sortAsc) res = res.OrderBy(c=>c.Age);
     else res = res.OrderByDescending(c => c.Age);
 
     return res;
     ```
+
+[Фильтрация данных](./wpf_filtering.md) | [Содержание](../readme.md#тема-8-оконные-приложения)

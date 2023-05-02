@@ -1,10 +1,4 @@
-<table style="width: 100%;"><tr><td style="width: 40%;">
-<a href="../articles/t8_binding.md">Привязка (Binding)
-</a></td><td style="width: 20%;">
-<a href="../readme.md">Содержание
-</a></td><td style="width: 40%;">
-<a href="../articles/wpf_template.md">Каркас приложения. Модель данных. Привязка данных. Табличный вывод.
-</a></td><tr></table>
+[Привязка (Binding)](./t8_binding.md) | [Содержание](../readme.md#тема-8-оконные-приложения) | [Каркас приложения. Модель данных. Привязка данных. Табличный вывод.](./wpf_template.md)
 
 # Элементы управления
 
@@ -129,8 +123,12 @@ private void button1_Click(object sender, RoutedEventArgs e)
 
 ```xml
 <StackPanel>
-    <TextBlock FlowDirection="RightToLeft">RightToLeft</TextBlock>
-    <TextBlock FlowDirection="LeftToRight">LeftToRight</TextBlock>
+    <TextBlock FlowDirection="RightToLeft">
+        RightToLeft
+    </TextBlock>
+    <TextBlock FlowDirection="LeftToRight">
+        LeftToRight
+    </TextBlock>
 </StackPanel>
 ```
 
@@ -194,16 +192,21 @@ private void button1_Click(object sender, RoutedEventArgs e)
 Возьмем другой пример. Определим кнопку с именем *button1*:
 
 ```xml
-<Window x:Class="ControlsApp.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ControlsApp"
-        mc:Ignorable="d"
-        Title="Элементы управления" Height="250" Width="300">
+<Window 
+    x:Class="ControlsApp.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:ControlsApp"
+    mc:Ignorable="d"
+    Title="Элементы управления" 
+    Height="250" 
+    Width="300"
+>
     <StackPanel>
-        <Button x:Name="button1" />
+        <Button 
+            x:Name="button1" />
     </StackPanel>
 </Window>
 ```
@@ -248,9 +251,18 @@ namespace ControlsApp
 <Button x:Name="button1">
     <StackPanel>
         <TextBlock Text="Набор кнопкок" />
-        <Button Background="Red" Height="20" Content="Red" />
-        <Button Background="Yellow" Height="20" Content="Yellow" />
-        <Button Background="Green" Height="20" Content="Green" />
+        <Button 
+            Background="Red" 
+            Height="20" 
+            Content="Red" />
+        <Button 
+            Background="Yellow" 
+            Height="20" 
+            Content="Yellow" />
+        <Button 
+            Background="Green" 
+            Height="20" 
+            Content="Green" />
     </StackPanel>
 </Button>
 ```
@@ -373,14 +385,18 @@ private void Button_Click(object sender, RoutedEventArgs e)
 Например, определим код xaml:
 
 ```xml
-<Window x:Class="ControlsApp.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ControlsApp"
-        mc:Ignorable="d"
-        Title="Элементы управления" Height="250" Width="300">
+<Window 
+    x:Class="ControlsApp.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:ControlsApp"
+    mc:Ignorable="d"
+    Title="Элементы управления" 
+    Height="250" 
+    Width="300"
+>
     <StackPanel>
         <Button 
             x:Name="acceptButton" 
@@ -709,15 +725,19 @@ private void Button_Click(object sender, RoutedEventArgs e)
 Возьмем простейший элемент-список - **ListBox**:
 
 ```xml
-<Window x:Class="ControlsApp.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ControlsApp"
-        xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        mc:Ignorable="d"
-        Title="ListBox" Height="200" Width="300">
+<Window 
+    x:Class="ControlsApp.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:ControlsApp"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    mc:Ignorable="d"
+    Title="ListBox" 
+    Height="200" 
+    Width="300"
+>
     <Grid>
         <ListBox Name="list">
             <sys:String>Lumia 950</sys:String>
@@ -787,14 +807,18 @@ class Phone
 Теперь создадим в xaml набор объектов этого класса **Phone** и выведем в списке значение свойства **Title** этих объектов:
 
 ```xml
-<Window x:Class="ControlsApp.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ControlsApp"
-        mc:Ignorable="d"
-        Title="ListBox" Height="220" Width="300">
+<Window 
+    x:Class="ControlsApp.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:ControlsApp"
+    mc:Ignorable="d"
+    Title="ListBox" 
+    Height="220" 
+    Width="300"
+>
     <Grid Background="Lavender">
         <ListBox 
             Name="list" 
@@ -893,19 +917,29 @@ private void list_Selected(object sender, RoutedEventArgs e)
 В качестве элементов в **ComboBox**-e мы можем использовать различные компоненты, но наиболее эффективным является применение элемента **ComboBoxItem**. **ComboBoxItem** представляет элемент управления содержимым, в который через свойство **Content** мы можем поместить другие элементы. Например:
 
 ```xml
-<ComboBox Height="50" Width="150" VerticalAlignment="Top">
+<ComboBox 
+    Height="50" 
+    Width="150" 
+    VerticalAlignment="Top"
+>
     <ComboBoxItem IsSelected="True">
         <StackPanel Orientation="Horizontal">
-            <Image Source="cats.jpg"  Width="60" />
+            <Image 
+                Source="cats.jpg"  
+                Width="60" />
             <TextBlock>cats.jpg</TextBlock>
         </StackPanel>
     </ComboBoxItem>
     <StackPanel Orientation="Horizontal">
-        <Image Source="windowcat.jpg" Width="60" />
+        <Image 
+            Source="windowcat.jpg" 
+            Width="60" />
         <TextBlock>windowcat.jpg</TextBlock>
     </StackPanel>
     <StackPanel Orientation="Horizontal">
-        <Image Source="234.jpg" Width="60" />
+        <Image 
+            Source="234.jpg" 
+            Width="60" />
         <TextBlock>234.jpg</TextBlock>
     </StackPanel>
 </ComboBox>
@@ -920,7 +954,11 @@ private void list_Selected(object sender, RoutedEventArgs e)
 Обрабатывая событие **SelectionChanged**, мы можем динамически получать выделенный элемент:
 
 ```xml
-<ComboBox Height="25" Width="150" SelectionChanged="ComboBox_Selected">
+<ComboBox 
+    Height="25" 
+    Width="150" 
+    SelectionChanged="ComboBox_Selected"
+>
 <!-- остальное содержимое списка-->
 </ComboBox>
 ```
@@ -965,21 +1003,25 @@ public class Phone
 Теперь же выведем объекты в таблицу **DataGrid**. Чтобы **DataGrid** автоматически разбивал таблицу на столбцы, установим свойство `AutoGenerateColumns="True"` (вроде можно и не устанавливать - оно по-умолчанию включено):
 
 ```xml
-<Window x:Class="ControlsApp.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ControlsApp"
-        xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
-         
-        mc:Ignorable="d"
-        Title="DataGrid" Height="220" Width="300">
+<Window 
+    x:Class="ControlsApp.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:ControlsApp"
+    xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
+        
+    mc:Ignorable="d"
+    Title="DataGrid" 
+    Height="220" 
+    Width="300">
     <Grid Background="Lavender">
         <DataGrid 
             x:Name="phonesGrid" 
             AutoGenerateColumns="True" 
-            ItemsSource="{DynamicResource ResourceKey=phones}">
+            ItemsSource="{DynamicResource 
+                ResourceKey=phones}">
             <DataGrid.Resources>
                 <col:ArrayList x:Key="phones">
                     <local:Phone 
@@ -1126,8 +1168,10 @@ DataGridTemplateColumn | Позволяет задать специфичный 
     <DataGrid.RowDetailsTemplate>
         <DataTemplate>
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Path=Price}" />
-                <TextBlock Text=" рублей по скидке" />
+                <TextBlock 
+                    Text="{Binding Path=Price}" />
+                <TextBlock 
+                    Text=" рублей по скидке" />
             </StackPanel>
         </DataTemplate>
     </DataGrid.RowDetailsTemplate>
@@ -1187,7 +1231,10 @@ WPF поддерживает различны форматы изображен�
 
 ```xml
 <InkCanvas>
-    <Image Source="2.jpg"  Width="300" Height="250"  />
+    <Image 
+        Source="2.jpg"  
+        Width="300" 
+        Height="250"  />
 </InkCanvas>
 ```
 
@@ -1209,10 +1256,4 @@ WPF поддерживает различны форматы изображен�
 
 Используя эти значения и обрабатывая события **InkCanvas**, такие как **StrokeCollected** (штрих нарисован), **StrokeErased** (штрих стерли) и др., можно управлять набором штрихов и создавать более функциональные приложения на основе **InkCanvas**.
 
-<table style="width: 100%;"><tr><td style="width: 40%;">
-<a href="../articles/t8_binding.md">Привязка (Binding)
-</a></td><td style="width: 20%;">
-<a href="../readme.md">Содержание
-</a></td><td style="width: 40%;">
-<a href="../articles/wpf_template.md">Каркас приложения. Модель данных. Привязка данных. Табличный вывод.
-</a></td><tr></table>
+[Привязка (Binding)](./t8_binding.md) | [Содержание](../readme.md#тема-8-оконные-приложения) | [Каркас приложения. Модель данных. Привязка данных. Табличный вывод.](./wpf_template.md)

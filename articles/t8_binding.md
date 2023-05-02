@@ -1,11 +1,4 @@
-<table style="width: 100%;"><tr><td style="width: 40%;">
-<a href="../articles/t8_win_app.md">Обзор типов оконных приложений в C#
-</a></td><td style="width: 20%;">
-<a href="../readme.md">Содержание
-</a></td><td style="width: 40%;">
-<a href="../articles/t8_elements.md">Элементы управления
-</a></td><tr></table>
-
+[Обзор типов оконных приложений в C#](./t8_win_app.md) | [Содержание](../readme.md#тема-8-оконные-приложения) | [Элементы управления](./t8_elements.md)
 
 # Привязка (Binding). Интерфейс INotifyPropertyChanged. Форматирование значений привязки и конвертеры значений.
 
@@ -13,26 +6,32 @@
 
 ## Введение в привязку данных
 
-В WPF привязка (binding) является мощным инструментом программирования, без которого не обходится ни одно серьезное приложение.
+В WPF привязка (binding) является мощным инструментом программирования, без которого не обходится ни одно серьёзное приложение.
 
 Привязка подразумевает взаимодействие двух объектов: источника и приемника. Объект-приемник создает привязку к определенному свойству объекта-источника. В случае модификации объекта-источника, объект-приемник также будет модифицирован. Например, простейшая форма с использованием привязки:
 
 ```xml
-<Window x:Class="BindingApp.MainWindow"
+<Window 
+    x:Class="BindingApp.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:BindingApp"
     mc:Ignorable="d"
-    Title="MainWindow" Height="250" Width="300">
+    Title="MainWindow" 
+    Height="250" 
+    Width="300"
+>
     <StackPanel>
         <TextBox 
             x:Name="myTextBox" 
             Height="30" />
         <TextBlock 
             x:Name="myTextBlock" 
-            Text="{Binding ElementName=myTextBox,Path=Text}"
+            Text="{Binding 
+                ElementName=myTextBox,
+                Path=Text}"
             Height="30" />
     </StackPanel>
 </Window>
@@ -121,7 +120,10 @@ BindingOperations.ClearAllBindings(myTextBlock);
     <TextBox 
         x:Name="textBox2" 
         Height="30" 
-        Text="{Binding ElementName=textBox1, Path=Text, Mode=TwoWay}" />
+        Text="{Binding 
+            ElementName=textBox1, 
+            Path=Text, 
+            Mode=TwoWay}" />
 </StackPanel>
 ```
 
@@ -144,7 +146,11 @@ BindingOperations.ClearAllBindings(myTextBlock);
     <TextBox 
         x:Name="textBox2" 
         Height="30"
-        Text="{Binding ElementName=textBox1, Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        Text="{Binding 
+            ElementName=textBox1, 
+            Path=Text, 
+            Mode=TwoWay, 
+            UpdateSourceTrigger=PropertyChanged}" />
 </StackPanel>
 ```
 
@@ -164,14 +170,18 @@ class Phone
 Теперь создадим объект этого класса и определим к нему привязку:
 
 ```xml
-<Window x:Class="BindingApp.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BindingApp"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="150" Width="300">
+<Window 
+    x:Class="BindingApp.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:BindingApp"
+    mc:Ignorable="d"
+    Title="MainWindow" 
+    Height="150" 
+    Width="300"
+>
     <Window.Resources>
         <local:Phone 
             x:Key="nexusPhone" 
@@ -193,7 +203,9 @@ class Phone
             Foreground="White"/>
         <TextBlock 
             x:Name="titleTextBlock" 
-            Text="{Binding Source={StaticResource nexusPhone}, Path=Title}"
+            Text="{Binding 
+                Source={StaticResource nexusPhone}, 
+                Path=Title}"
             Foreground="White" 
             Grid.Column="1"/>
         <TextBlock 
@@ -202,7 +214,9 @@ class Phone
             Grid.Row="1"/>
         <TextBlock 
             x:Name="priceTextBlock" 
-            Text="{Binding Source={StaticResource nexusPhone}, Path=Price}"
+            Text="{Binding 
+                Source={StaticResource nexusPhone}, 
+                Path=Price}"
             Foreground="White" 
             Grid.Column="1" 
             Grid.Row="1"/>
@@ -216,12 +230,18 @@ class Phone
 
 ```xml
 <Window.Resources>
-    <local:Phone x:Key="nexusPhone" Company="Google" Price="25000" />
+    <local:Phone 
+        x:Key="nexusPhone" 
+        Company="Google" 
+        Price="25000" />
 </Window.Resources>
 <StackPanel>
     <TextBlock 
         x:Name="titleTextBlock"
-        Text="{Binding Source={StaticResource nexusPhone}, Path=Title, TargetNullValue=Текст по умолчанию}" />
+        Text="{Binding 
+            Source={StaticResource nexusPhone}, 
+            Path=Title, 
+            TargetNullValue=Текст по умолчанию}" />
 </StackPanel>
 ```
 
@@ -239,7 +259,11 @@ class Phone
 Например, совместим источник и приемник привязке в самом элементе:
 
 ```xml
-<TextBox Text="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Background, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+<TextBox Text="{Binding 
+    RelativeSource={RelativeSource Mode=Self}, 
+    Path=Background, 
+    Mode=TwoWay, 
+    UpdateSourceTrigger=PropertyChanged}" />
 ```
 
 ![](../img/08029.png)
@@ -252,7 +276,11 @@ class Phone
 <Grid Background="Black">
     <TextBlock 
         Foreground="White"
-        Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Grid}}, Path=Background}" />
+        Text="{Binding 
+            RelativeSource={RelativeSource 
+                Mode=FindAncestor,
+                AncestorType={x:Type Grid}}, 
+            Path=Background}" />
 </Grid>
 ```
 
@@ -263,16 +291,23 @@ class Phone
 У объекта **FrameworkElement**, от которого наследуются элементы управления, есть интересное свойство **DataContext**. Оно позволяет задавать для элемента и вложенных в него элементов некоторый контекст данных. Тогда вложенные элементы могут использовать объект **Binding** для привязки к конкретным свойствам этого контекста. Например, используем ранее определенный класс **Phone** и создадим контекст данных из объекта этого класса:
 
 ```xml
-<Window x:Class="BindingApp.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BindingApp"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="150" Width="300">
+<Window 
+    x:Class="BindingApp.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:BindingApp"
+    mc:Ignorable="d"
+    Title="MainWindow" 
+    Height="150" 
+    Width="300">
     <Window.Resources>
-        <local:Phone x:Key="nexusPhone" Title="Nexus X5" Company="Google" Price="25000" />
+        <local:Phone 
+            x:Key="nexusPhone" 
+            Title="Nexus X5" 
+            Company="Google" 
+            Price="25000" />
     </Window.Resources>
     <Grid 
         Background="Black" 
@@ -317,18 +352,29 @@ class Phone
 Выше использовался объект **Phone** для привязки к текстовым блокам. Однако если мы изменим его, содержимое текстовых блоков не изменится. Например, добавим в окно приложения кнопку:
 
 ```xml
-<Window x:Class="BindingApp.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BindingApp"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="150" Width="300">
+<Window 
+    x:Class="BindingApp.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:BindingApp"
+    mc:Ignorable="d"
+    Title="MainWindow" 
+    Height="150" 
+    Width="300"
+>
     <Window.Resources>
-        <local:Phone x:Key="nexusPhone" Title="Nexus X5" Company="Google" Price="25000" />
+        <local:Phone 
+            x:Key="nexusPhone" 
+            Title="Nexus X5" 
+            Company="Google" 
+            Price="25000" />
     </Window.Resources>
-    <Grid Background="Black" DataContext="{StaticResource nexusPhone}" TextBlock.Foreground="White">
+    <Grid 
+        Background="Black" 
+        DataContext="{StaticResource nexusPhone}" 
+        TextBlock.Foreground="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
@@ -339,15 +385,34 @@ class Phone
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <TextBlock Text="Модель" />
-        <TextBlock Text="{Binding Title}" Grid.Row="1" />
-        <TextBlock Text="Производитель" Grid.Column="1"/>
-        <TextBlock Text="{Binding Company}" Grid.Column="1" Grid.Row="1" />
-        <TextBlock Text="Цена" Grid.Column="2" />
-        <TextBlock Text="{Binding Price}" Grid.Column="2" Grid.Row="1" />
+        <TextBlock 
+            Text="Модель" />
+        <TextBlock 
+            Text="{Binding Title}" 
+            Grid.Row="1" />
+        <TextBlock 
+            Text="Производитель" 
+            Grid.Column="1"/>
+        <TextBlock 
+            Text="{Binding Company}" 
+            Grid.Column="1" 
+            Grid.Row="1" />
+        <TextBlock 
+            Text="Цена" 
+            Grid.Column="2" />
+        <TextBlock 
+            Text="{Binding Price}" 
+            Grid.Column="2" 
+            Grid.Row="1" />
  
-        <Button Foreground="White" Content="Изменить" Click="Button_Click" Background="Black"
-            BorderBrush="Silver" Grid.Column="2" Grid.Row="2" />
+        <Button 
+            Foreground="White" 
+            Content="Изменить" 
+            Click="Button_Click" 
+            Background="Black"
+            BorderBrush="Silver" 
+            Grid.Column="2" 
+            Grid.Row="2" />
     </Grid>
 </Window>
 ```
@@ -417,7 +482,7 @@ class Phone : INotifyPropertyChanged
 
 ### Форматирование значений
 
-Привязка представляет очень простой механизм, однако иногда этому механизму требуется некоторая кастомизация. Так, нам может потребоваться небольшое форматирование значение. Для примера возьмем класс **Phone**:
+Привязка представляет очень простой механизм, однако иногда этому механизму требуется некоторая кастомизация (настройка). Так, нам может потребоваться небольшое форматирование значения. Для примера возьмем класс **Phone**:
 
 ```cs
 class Phone
@@ -431,19 +496,31 @@ class Phone
 Допустим, нам надо в текстовый блок вывести не только цену, но и еще какой-нибудь текст:
 
 ```xml
-<Window x:Class="ValueConventerApp.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ValueConventerApp"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="150" Width="300">
+<Window 
+    x:Class="ValueConventerApp.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:ValueConventerApp"
+    mc:Ignorable="d"
+    Title="MainWindow" 
+    Height="150" 
+    Width="300"
+>
     <Window.Resources>
-        <local:Phone x:Key="nexusPhone" Title="Nexus X5" Company="Google" Price="25000" />
+        <local:Phone 
+            x:Key="nexusPhone" 
+            Title="Nexus X5" 
+            Company="Google" 
+            Price="25000" />
     </Window.Resources>
     <Grid>
-        <TextBlock Text="{Binding StringFormat=Итоговая цена {0} рублей, Source={StaticResource nexusPhone}, Path=Price}" />
+        <TextBlock 
+            Text="{Binding 
+                StringFormat=Итоговая цена {0} рублей, 
+                Source={StaticResource nexusPhone}, 
+                Path=Price}" />
     </Grid>
 </Window>
 ```
@@ -455,7 +532,11 @@ class Phone
 При необходимости мы можем использовать дополнительные опции форматирования, например, {0:C} для вывода валюты, {0:P} для вывода процентов и т.д.:
 
 ```xml
-<TextBlock Text="{Binding StringFormat={}{0:C}, Source={StaticResource nexusPhone}, Path=Price}" />
+<TextBlock 
+    Text="{Binding 
+        StringFormat={}{0:C}, 
+        Source={StaticResource nexusPhone}, 
+        Path=Price}" />
 ```
 
 При этом если у нас значение в **StringFormat** начинается с фигурных скобок, например, "{0:C}", то перед ними ставятся еще пара фигурных скобок, как в данном случае. По сути они ничего важно не несут, просто служат для корректной интерпретации строки.
@@ -463,7 +544,11 @@ class Phone
 Либо в этом случае нам надо экранировать скобки слешами:
 
 ```xml
-<TextBlock Text="{Binding StringFormat=\{0:C\}, Source={StaticResource nexusPhone}, Path=Price}" />
+<TextBlock 
+    Text="{Binding 
+        StringFormat=\{0:C\}, 
+        Source={StaticResource nexusPhone}, 
+        Path=Price}" />
 ```
 
 В зависимости от типа элемента доступны различные типы форматировщиков значений:
@@ -485,7 +570,9 @@ class Phone
 ```xml
 <Button 
     ContentStringFormat="{}{0:C}"
-    Content="{Binding Source={StaticResource nexusPhone}, Path=Price}" />
+    Content="{Binding 
+        Source={StaticResource nexusPhone}, 
+        Path=Price}" />
 ```
 
 ### Конвертеры значений
@@ -502,12 +589,20 @@ using System.Windows.Data;
  
 public class DateTimeToDateConverter : IValueConverter
 {
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    public object Convert(
+        object value, 
+        Type targetType, 
+        object parameter, 
+        CultureInfo culture)
     {
         return ((DateTime)value).ToString("dd.MM.yyyy");
     }
      
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    public object ConvertBack(
+        object value, 
+        Type targetType, 
+        object parameter, 
+        CultureInfo culture)
     {
         return DependencyProperty.UnsetValue;
     }  
@@ -533,24 +628,33 @@ public class DateTimeToDateConverter : IValueConverter
 Теперь применим этот конвертер в xaml:
 
 ```XML
-<Window x:Class="ValueConventerApp.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ValueConventerApp"
-        xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="150" Width="300">
+<Window 
+    x:Class="ValueConventerApp.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:ValueConventerApp"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    mc:Ignorable="d"
+    Title="MainWindow" 
+    Height="150" 
+    Width="300"
+>
     <Window.Resources>
-        <sys:DateTime x:Key="myDate">2/12/2016</sys:DateTime>
+        <sys:DateTime x:Key="myDate">
+            2/12/2016
+        </sys:DateTime>
         <local:DateTimeToDateConverter x:Key="myDateConverter" />
     </Window.Resources>
     <StackPanel>
         <TextBlock 
-            Text="{Binding Source={StaticResource myDate},Converter={StaticResource myDateConverter}}" />
+            Text="{Binding 
+                Source={StaticResource myDate},
+                Converter={StaticResource myDateConverter}}" />
         <TextBlock 
-            Text="{Binding Source={StaticResource myDate}}" />
+            Text="{Binding 
+                Source={StaticResource myDate}}" />
     </StackPanel>
 </Window>
 ```
@@ -566,7 +670,11 @@ public class DateTimeToDateConverter : IValueConverter
 ```cs
 public class DateTimeToDateConverter : IValueConverter
 {
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    public object Convert(
+        object value, 
+        Type targetType, 
+        object parameter, 
+        CultureInfo culture)
     {
         if(parameter!=null && parameter.ToString()=="EN")
             return ((DateTime)value).ToString("MM-dd-yyyy");
@@ -574,7 +682,11 @@ public class DateTimeToDateConverter : IValueConverter
         return ((DateTime)value).ToString("dd.MM.yyyy");
     }
          
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    public object ConvertBack(
+        object value, 
+        Type targetType, 
+        object parameter, 
+        CultureInfo culture)
     {
         return DependencyProperty.UnsetValue;
     }
@@ -588,11 +700,17 @@ public class DateTimeToDateConverter : IValueConverter
 ```xml
 <StackPanel>
     <TextBlock 
-        Text="{Binding Source={StaticResource myDate},Converter={StaticResource myDateConverter}}" />
+        Text="{Binding 
+            Source={StaticResource myDate},
+            Converter={StaticResource myDateConverter}}" />
     <TextBlock 
-        Text="{Binding Source={StaticResource myDate}, ConverterParameter=EN, Converter={StaticResource myDateConverter}}" />
+        Text="{Binding 
+            Source={StaticResource myDate}, 
+            ConverterParameter=EN, 
+            Converter={StaticResource myDateConverter}}" />
     <TextBlock 
-        Text="{Binding Source={StaticResource myDate}}" />
+        Text="{Binding 
+            Source={StaticResource myDate}}" />
 </StackPanel>
 ```
 
@@ -605,7 +723,11 @@ public class DateTimeToDateConverter : IValueConverter
 ```cs
 public class DateTimeToDateConverter : IValueConverter
 {
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    public object Convert(
+        object value, 
+        Type targetType, 
+        object parameter, 
+        CultureInfo culture)
     {
         if (targetType != typeof(Brush))
         {
@@ -616,10 +738,4 @@ public class DateTimeToDateConverter : IValueConverter
 
 В данном случае предполагается, что тип объекта, к которому надо преобразовать, представляет тип **Brush**.
 
-<table style="width: 100%;"><tr><td style="width: 40%;">
-<a href="../articles/t8_win_app.md">Обзор типов оконных приложений в C#
-</a></td><td style="width: 20%;">
-<a href="../readme.md">Содержание
-</a></td><td style="width: 40%;">
-<a href="../articles/t8_elements.md">Элементы управления
-</a></td><tr></table>
+[Обзор типов оконных приложений в C#](./t8_win_app.md) | [Содержание](../readme.md#тема-8-оконные-приложения) | [Элементы управления](./t8_elements.md)

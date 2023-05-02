@@ -1,10 +1,4 @@
-<table style="width: 100%;"><tr><td style="width: 40%;">
-<a href="../articles/wpf_template.md">Каркас приложения. Модель данных. Привязка данных. Табличный вывод.
-</a></td><td style="width: 20%;">
-<a href="../readme.md">Содержание
-</a></td><td style="width: 40%;">
-<a href="../articles/wpf_search_sort.md">Поиск, сортировка
-</a></td><tr></table>
+[Каркас приложения. Модель данных. Привязка данных. Табличный вывод.](./wpf_template.md) | [Содержание](../readme.md) | [Поиск, сортировка](./wpf_search_sort.md)
 
 # Фильтрация данных
 
@@ -15,30 +9,30 @@
 Суть фильтрации сводится к тому, что отображается не полный список объектов ("кошек"), а отфильтрованный по словарному полю (тип, категория...). Для получения фильтрованного списка реализуем геттер и сеттер для списка кошек:
 
 ```cs
-public string SelectedBreed = "";
+public string selectedBreed = "";
 
-private IEnumerable<Cat> _CatList = null;
-public IEnumerable<Cat> CatList {
+private IEnumerable<Cat> _catList = null;
+public IEnumerable<Cat> catList {
     get
     {
-        return _CatList
-            .Where(c=>(SelectedBreed=="Все породы" || c.Breed==SelectedBreed));
+        return _catList
+            .Where(c=>(selectedBreed=="Все породы" || c.Breed==selectedBreed));
     }
     set {
-        _CatList = value;
+        _catList = value;
     } 
 }
 ```
 
-Таким обазом, при присваивании полный список "кошек" будет сохраняться в переменной *_CatList*, а при чтении будет возвращаться отфильтрованный список
+Таким обазом, при присваивании полный список "кошек" будет сохраняться в переменной *_catList*, а при чтении будет возвращаться отфильтрованный список
 
-При работе с БД у нас обычно есть отдельные модели (таблицы) справочников - реализуем в нашем поставщике данных метод, возвращающий справочник пород:
+При работе с БД у нас обычно есть отдельные модели (таблицы) справочников - реализуем в нашем *поставщике данных* метод, возвращающий справочник пород:
 
 1. Сначала создадим класс для элемента справочника
 
     ```cs
     public class CatBreed { 
-        public string Title { get; set; }
+        public string title { get; set; }
     }
     ```
 
@@ -47,7 +41,7 @@ public IEnumerable<Cat> CatList {
 2. Создаем в классе главного окна свойство для хранения справочника
 
     ```cs
-    public List<CatBreed> CatBreedList { get; set; }
+    public List<CatBreed> catBreedList { get; set; }
     ```
 
     Здесь мы выбрали тип **List**, т.к. нам нужен изменяемый список, в который мы добавим элемент "Все породы"
@@ -55,18 +49,18 @@ public IEnumerable<Cat> CatList {
 3. В интерфейс поставщика данных (IDataProvider) добавляем метод для получения списка пород
 
     ```cs
-    IEnumerable<CatBreed> GetCatBreeds();
+    IEnumerable<CatBreed> getCatBreeds();
     ```
 
 4. Реализуем этот метод в LocalDataProvider
 
     ```cs
-    public IEnumerable<CatBreed> GetCatBreeds()
+    public IEnumerable<CatBreed> getCatBreeds()
     {
         return new CatBreed[] {
-            new CatBreed{ Title="Дворняжка" },
-            new CatBreed{ Title="Шотландская вислоухая" },
-            new CatBreed{ Title="Сиамский" },
+            new CatBreed{ title="Дворняжка" },
+            new CatBreed{ title="Шотландская вислоухая" },
+            new CatBreed{ title="Сиамский" },
         };
     }
     ```
@@ -74,8 +68,8 @@ public IEnumerable<Cat> CatList {
 5. Получаем список пород и добавляем в начало "Все породы", чтобы можно было отменить фильтрацию и отображать полный список
 
     ```cs
-    CatBreedList = Globals.dataProvider.GetCatBreeds().ToList();
-    CatBreedList.Insert(0, new CatBreed { Title = "Все породы" });
+    catBreedList = Globals.dataProvider.getCatBreeds().ToList();
+    catBreedList.Insert(0, new CatBreed { title = "Все породы" });
     ```
 
 4. Теперь, имея список пород, добавляем в разметку выпадающий список для выбор породы (во WrapPanel):
@@ -91,12 +85,12 @@ public IEnumerable<Cat> CatList {
         VerticalAlignment="Center"
         MinWidth="100"
         SelectedIndex="0"
-        ItemsSource="{Binding CatBreedList}">
+        ItemsSource="{Binding catBreedList}">
 
         <ComboBox.ItemTemplate>
             <DataTemplate>
                 <Label 
-                    Content="{Binding Title}"/>
+                    Content="{Binding title}"/>
             </DataTemplate>
         </ComboBox.ItemTemplate>
     </ComboBox>
@@ -107,7 +101,7 @@ public IEnumerable<Cat> CatList {
 5. В классе главного окна в обработчике события выбора породы (*BreedFilterComboBox_SelectionChanged*) запоминаем выбранную породу
 
     ```cs
-    SelectedBreed = (BreedFilterComboBox.SelectedItem as CatBreed).Title;
+    selectedBreed = (BreedFilterComboBox.SelectedItem as CatBreed).title;
     ```
 
     Свойство *BreedFilterComboBox.SelectedItem* содержит выбранный элемент списка, в нашем случае это объект типа **CatBreed**.
@@ -141,7 +135,7 @@ public IEnumerable<Cat> CatList {
     ```cs
     private void BreedFilterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        SelectedBreed = (BreedFilterComboBox.SelectedItem as CatBreed).Title;
+        selectedBreed = (BreedFilterComboBox.SelectedItem as CatBreed).title;
         Invalidate();
     }
     ```
@@ -156,21 +150,21 @@ public IEnumerable<Cat> CatList {
 
     ```cs
     public class CatAge { 
-        public string Title { get; set; }
-        public int AgeFrom { get; set; }
-        public int AgeTo { get; set; }
+        public string title { get; set; }
+        public int ageFrom { get; set; }
+        public int ageTo { get; set; }
     }
     ```
 
 2. Затем создадим список и переменную для хранения выбранного элемента списка. Обратите внимание, тут мы храним не строку, а весь объект.
 
     ```cs
-    private CatAge SelectedAge = null;
-    public IEnumerable<CatAge> CatAgeList { get; set; } = new CatAge[]{
-        new CatAge{Title="Все возраста", AgeFrom=0, AgeTo=99},
-        new CatAge{Title="Котята", AgeFrom=0, AgeTo=1},
-        new CatAge{Title="Молодые", AgeFrom=1, AgeTo=10},
-        new CatAge{Title="Старые", AgeFrom=10, AgeTo=99}
+    private CatAge selectedAge = null;
+    public IEnumerable<CatAge> catAgeList { get; set; } = new CatAge[]{
+        new CatAge{title="Все возраста", ageFrom=0, ageTo=99},
+        new CatAge{title="Котята", ageFrom=0, ageTo=1},
+        new CatAge{title="Молодые", ageFrom=1, ageTo=10},
+        new CatAge{title="Старые", ageFrom=10, ageTo=99}
     };
     ```
 
@@ -183,12 +177,12 @@ public IEnumerable<Cat> CatList {
         VerticalAlignment="Center"
         MinWidth="100"
         SelectedIndex="0"
-        ItemsSource="{Binding CatAgeList}">
+        ItemsSource="{Binding catAgeList}">
 
         <ComboBox.ItemTemplate>
             <DataTemplate>
                 <Label 
-                    Content="{Binding Title}"/>
+                    Content="{Binding title}"/>
             </DataTemplate>
         </ComboBox.ItemTemplate>
     </ComboBox>
@@ -199,7 +193,7 @@ public IEnumerable<Cat> CatList {
     ```cs
     private void BreedFilterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        SelectedAge = BreedFilterComboBox.SelectedItem as CatAge;
+        selectedAge = BreedFilterComboBox.SelectedItem as CatAge;
         Invalidate();
     }
     ```
@@ -209,15 +203,9 @@ public IEnumerable<Cat> CatList {
     ```cs
     get
     {
-        return _CatList
-            .Where(c=>(c.Age>=SelectedAge.AgeFrom && c.Age<SelectedAge.AgeTo));
+        return _catList
+            .Where(c=>(c.Age>=selectedAge.ageFrom && c.Age<selectedAge.ageTo));
     }
     ```
 
-<table style="width: 100%;"><tr><td style="width: 40%;">
-<a href="../articles/wpf_template.md">Каркас приложения. Модель данных. Привязка данных. Табличный вывод.
-</a></td><td style="width: 20%;">
-<a href="../readme.md">Содержание
-</a></td><td style="width: 40%;">
-<a href="../articles/wpf_search_sort.md">Поиск, сортировка
-</a></td><tr></table>    
+[Каркас приложения. Модель данных. Привязка данных. Табличный вывод.](./wpf_template.md) | [Содержание](../readme.md) | [Поиск, сортировка](./wpf_search_sort.md)

@@ -1,10 +1,4 @@
-<table style="width: 100%;"><tr><td style="width: 40%;">
-<a href="../articles/t8_elements.md">Элементы управления
-</a></td><td style="width: 20%;">
-<a href="../readme.md">Содержание
-</a></td><td style="width: 40%;">
-<a href="../articles/wpf_filtering.md">Фильтрация данных
-</a></td><tr></table>
+[Элементы управления](./t8_elements.md) | [Содержание](../readme.md#тема-8-оконные-приложения) | [Фильтрация данных](./wpf_filtering.md)
 
 # Каркас приложения. Модель данных. Привязка данных. Табличный вывод.
 
@@ -38,8 +32,8 @@
 
     <!-- типа логотип компании -->
     <Image 
-            Source="./Img/simon.png" 
-            Grid.RowSpan="2"/>
+        Source="./Img/simon.png" 
+        Grid.RowSpan="2"/>
 
     <StackPanel 
         Orientation="Vertical"
@@ -110,9 +104,21 @@
         public IEnumerable<Cat> GetCats()
         {
             return new Cat[]{
-                new Cat{Age=1,Breed="Дворняжка", Color="Белый", Name="Ириска"},
-                new Cat{Age=2,Breed="Шотландская вислоухая", Color="Коричневый", Name="Изи"},
-                new Cat{Age=3,Breed="Сиамский", Color="Цветной", Name="Макс"}
+                new Cat{
+                    Age=1,
+                    Breed="Дворняжка", 
+                    Color="Белый", 
+                    Name="Ириска"},
+                new Cat{
+                    Age=2,
+                    Breed="Шотландская вислоухая", 
+                    Color="Коричневый", 
+                    Name="Изи"},
+                new Cat{
+                    Age=3,
+                    Breed="Сиамский", 
+                    Color="Цветной", 
+                    Name="Макс"}
             };
         }
     }
@@ -188,10 +194,4 @@
 
 ![](../img/08035.png)
 
-<table style="width: 100%;"><tr><td style="width: 40%;">
-<a href="../articles/t8_elements.md">Элементы управления
-</a></td><td style="width: 20%;">
-<a href="../readme.md">Содержание
-</a></td><td style="width: 40%;">
-<a href="../articles/wpf_filtering.md">Фильтрация данных
-</a></td><tr></table>
+[Элементы управления](./t8_elements.md) | [Содержание](../readme.md#тема-8-оконные-приложения) | [Фильтрация данных](./wpf_filtering.md)
