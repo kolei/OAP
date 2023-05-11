@@ -70,12 +70,12 @@
     {
         public class Cat
         {
-            public string Name { get; set; }
-            public int Age{ get; set; }
-            public string Color { get; set; }
+            public string name { get; set; }
+            public int age{ get; set; }
+            public string color { get; set; }
             // порода
-            public string Breed { get; set; }
-            public string Photo { get; set; }
+            public string breed { get; set; }
+            public string photo { get; set; }
         }
     }    
     ```
@@ -91,7 +91,7 @@
     {
         interface IDataProvider
         {
-            IEnumerable<Cat> GetCats();
+            IEnumerable<Cat> getCats();
         }
     }
     ```
@@ -101,24 +101,24 @@
     ```cs
     public class LocalDataProvider : IDataProvider
     {
-        public IEnumerable<Cat> GetCats()
+        public IEnumerable<Cat> getCats()
         {
             return new Cat[]{
                 new Cat{
-                    Age=1,
-                    Breed="Дворняжка", 
-                    Color="Белый", 
-                    Name="Ириска"},
+                    age=1,
+                    breed="Дворняжка", 
+                    color="Белый", 
+                    name="Ириска"},
                 new Cat{
-                    Age=2,
-                    Breed="Шотландская вислоухая", 
-                    Color="Коричневый", 
-                    Name="Изи"},
+                    age=2,
+                    breed="Шотландская вислоухая", 
+                    color="Коричневый", 
+                    name="Изи"},
                 new Cat{
-                    Age=3,
-                    Breed="Сиамский", 
-                    Color="Цветной", 
-                    Name="Макс"}
+                    age=3,
+                    breed="Сиамский", 
+                    color="Цветной", 
+                    name="Макс"}
             };
         }
     }
@@ -138,14 +138,14 @@
 4. В конструкторе главного окна (`MainWindow.xaml.cs`) присвоим глобальной переменной *dataProvider* экземпляр класса **LocalDataProvider** и сохраним список кошек в свойстве **CatList**
 
     ```cs
-    public IEnumerable<Cat> CatList { get; set; }
+    public IEnumerable<Cat> catList { get; set; }
    
     public MainWindow()
     {
         InitializeComponent();
         DataContext = this;
         Globals.dataProvider = new LocalDataProvider();
-        CatList = Globals.dataProvider.GetCats();
+        CatList = Globals.dataProvider.getCats();
     }
 
     private void ExitButton_Click(object sender, RoutedEventArgs e)
@@ -164,20 +164,20 @@
     Grid.Column="1"
     CanUserAddRows="False"
     AutoGenerateColumns="False"
-    ItemsSource="{Binding CatList}">
+    ItemsSource="{Binding catList}">
     <DataGrid.Columns>
         <DataGridTextColumn
             Header="Кличка"
-            Binding="{Binding Name}"/>
+            Binding="{Binding name}"/>
         <DataGridTextColumn
             Header="Возраст"
-            Binding="{Binding Age}"/>
+            Binding="{Binding age}"/>
         <DataGridTextColumn
             Header="Цвет"
-            Binding="{Binding Color}"/>
+            Binding="{Binding color}"/>
         <DataGridTextColumn
             Header="Порода"
-            Binding="{Binding Breed}"/>
+            Binding="{Binding breed}"/>
     </DataGrid.Columns>
 </DataGrid>
 ```
@@ -186,7 +186,7 @@
 
 * Атриут *AutoGenerateColumns="False"* запрещает автоматическое формирование столбцов таблицы - мы вручную описываем те столбцы, которые хотим видеть.
 
-* Атрибут *ItemsSource="{Binding CatList}"* "привязывает" к таблице источник данных - наш список кошек. 
+* Атрибут *ItemsSource="{Binding catList}"* "привязывает" к таблице источник данных - наш список кошек. 
 
 * В колонках таблицы мы уже "привязываемся" к свойствам класса источника данных
 
