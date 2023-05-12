@@ -56,6 +56,18 @@
                 {
                     parser.TextFieldType = FieldType.Delimited;
                     parser.SetDelimiters(",");
+
+                    /*
+                        По-умолчанию, в качестве разделителя разрядов 
+                        в числах с плавающей запятой (double) является точка
+                        Но конвертер использует текущую "культурную среду", а в России
+                        разделителем является запятая
+                        Чтобы явно указать разделитель мы межем конвертеру указать 
+                        объект NumberFormatInfo
+                    */
+                    NumberFormatInfo provider = new NumberFormatInfo();
+                    provider.NumberDecimalSeparator = ".";
+
                     while (!parser.EndOfData)
                     {
                         string[] fields = parser.ReadFields();
@@ -70,6 +82,8 @@
                                 newCat.breed = fields[1];
                                 newCat.color = fields[2];
                                 newCat.name = fields[3];
+                                // пример использования конвертера с провайдером
+                                // newCat.someDouble = Convert.ToDouble(fields[3], provider);
                                 try
                                 {
                                     // дата может быть не задана, поэтому заворачиваю в исключение
