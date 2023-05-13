@@ -8,21 +8,21 @@
     [
         {
             "age": 1,
-            "bread": "Дворняжка",
+            "breed": "Дворняжка",
             "color": "Белый",
             "name": "Ириска",
             "dateOfLastVaccination": null
         },
         {
             "age": 2,
-            "bread": "Шотландская вислоухая",
+            "breed": "Шотландская вислоухая",
             "color": "Коричневый",
             "name": "Изи",
             "dateOfLastVaccination": "2020-01-31"
         },
         {
             "age": 3,
-            "bread": "Сиамский",
+            "breed": "Сиамский",
             "color": "Цветной",
             "name": "Макс",
             "dateOfLastVaccination": "2022-05-10"
