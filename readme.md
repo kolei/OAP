@@ -190,6 +190,7 @@
 1. [Получение данных из внешних источников. CSV.](./articles/lab_wpf_data_csv.md)
 1. [Получение данных из внешних источников. JSON.](./articles/lab_wpf_data_json.md)
 1. [Фильтрация списка](./articles/lab_wpf_filter.md)
+1. [Поиск/сортировка](./articles/lab_wpf_search_sort.md)
 1. Создание WPF-приложений по индивидуальным заданиям (подготовка к экзамену)
 
 # [ЭКЗАМЕН](./articles/exam.md)
