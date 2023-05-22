@@ -1,10 +1,4 @@
-<table style="width: 100%;"><tr><td style="width: 40%;">
-<a href="../articles/t6_templates.md">Шаблоны проектирования
-</a></td><td style="width: 20%;">
-<a href="../readme.md">Содержание
-</a></td><td style="width: 40%;">
-<a href="../articles/t8_win_app.md">Обзор типов оконных приложений в C#...
-</a></td><tr></table>
+[Шаблоны проектирования](./t6_templates.md) | [Содержание](../readme.md) | [Обзор типов оконных приложений в C#...](./t8_win_app.md)
 
 # Библиотеки классов
 
@@ -301,10 +295,5 @@ method.Invoke(obj, new object[]{new string[]{}});
 
 Так как метод Main является статическим и не публичным, то к нему используется соответствующая битовая маска `BindingFlags.NonPublic | BindingFlags.Static`. И поскольку он в качестве параметра принимает массив строк, то при вызове метода передается соответствующее значение: `method.Invoke(obj, new object[]{new string[]{}})`
 
-<table style="width: 100%;"><tr><td style="width: 40%;">
-<a href="../articles/t6_templates.md">Шаблоны проектирования
-</a></td><td style="width: 20%;">
-<a href="../readme.md">Содержание
-</a></td><td style="width: 40%;">
-<a href="../articles/t8_win_app.md">Обзор типов оконных приложений в C#...
-</a></td><tr></table>
+[Шаблоны проектирования](./t6_templates.md) | [Содержание](../readme.md) | [Обзор типов оконных приложений в C#...](./t8_win_app.md)
+
