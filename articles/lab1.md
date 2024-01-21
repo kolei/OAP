@@ -10,11 +10,11 @@
 
 1. Запустите *Rider* и выберите пункт *New Solution* ("новое решение", решение - это группа програм для одного проекта)
 
-    ![](../img/04013.png)
+    ![](../img/rider02.png)
 
-1. Установите фильтры и найдите шаблон проекта *Консольное приложение (.NET)*
+1. Найдите шаблон проекта *Консольное приложение (.NET)*
 
-    ![](../img/04014.png)
+    ![](../img/rider03.png)
 
     В Настройках нового проекта введите название и запомните/поменяйте, если нужно, расположение проекта
 
@@ -28,9 +28,9 @@
 Console.WriteLine("Hello, World!");
 ```
 
-Файловая структура проекта (по-умолчанию отображается режим "Solution"):
+Переключитесь в режим "Файловая система" (по-умолчанию отображается режим "Solution"):
 
-![](../img/04016.png)
+![](../img/rider04.png)
 
 В каталоге проекта есть директории **bin**, **obj** и **.idea**, которые содержат скомпилированную программу и настройки *Rider* и значит сохранять эти каталоги в репозитории не нужно (добавить в `.gitignore`).
 
@@ -52,7 +52,7 @@ Console.WriteLine("Hello, World!");
 
 ![](../img/04017.png)
 
-Создайте файл `readme.md` с описанием проекта и ФИО исполнителя.
+Создайте файл `readme.md` (в корне "решения") с описанием проекта и ФИО исполнителя.
 
 Сохраните текущее состояние проекта в репозитории
 
@@ -74,37 +74,37 @@ git checkout -b lab4_1
 // команда Console.Write выводит текст в консоль
 Console.Write("Input katet1: ");
 // команда Console.ReadLine читает СТРОКУ из консоли
-var Katet1 = Console.ReadLine();
+var katet1 = Console.ReadLine();
 
 Console.Write("Input katet2: ");
-var Katet2 = Console.ReadLine();
+var katet2 = Console.ReadLine();
 
 // команда Math.Sqrt - квадратный корень
 // Math.Pow - возведение в степень
 // Convert.ToDouble - преобразует строку в число
-var Gipotenuza = Math.Sqrt(Math.Pow(Convert.ToDouble(Katet1), 2) + Math.Pow(Convert.ToDouble(Katet2), 2));
+var gipotenuza = Math.Sqrt(Math.Pow(Convert.ToDouble(katet1), 2) + Math.Pow(Convert.ToDouble(katet2), 2));
 
 // выводим результат
 // знак $ перед строкой указывает, что внутри строки в фигурных скобках названия переменных
-Console.WriteLine($"Gipotenuza = {Gipotenuza}");
+Console.WriteLine($"Gipotenuza = {gipotenuza}");
 
 // читаем строку, чтобы консольное окно сразу не закрылось
 Console.Write("Press ENTER to continue...");
 Console.ReadLine();
 ```
 
-В некоторых заданиях требуется ввести числа в одной строке, но т.к. функция **ReadLine** возвращает **строку** (например, "2 2"), то такая строка будет не валидным числом.
+В некоторых заданиях требуется ввести числа в одной строке (например, "2 2"), но т.к. функция **ReadLine** возвращает **строку**, то такая строка будет не валидным числом.
 
 Для разбиения строки на подстроки можно воспользоваться методом **Split**:
 
 ```cs
-var Numbers = Console.ReadLine();
-var NumberList = Numbers.Split(' ');
-var Number1 = Convert.ToInt32(NumberList[0]);
-var Number2 = Convert.ToInt32(NumberList[1]);
+var numbers = Console.ReadLine();
+var numberList = numbers.Split(' ');
+var number1 = Convert.ToInt32(numberList[0]);
+var number2 = Convert.ToInt32(numberList[1]);
 ```
 
-# Задание
+## Задание
 
 1. Выполните задание, выданное преподавателем
-2. Опубликуйте результаты в удаленном репозитории и скиньте ссылку преподавателю.
+1. Опубликуйте результаты в удаленном репозитории и скиньте ссылку преподавателю.
