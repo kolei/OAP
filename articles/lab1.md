@@ -82,11 +82,17 @@ var katet2 = Console.ReadLine();
 // команда Math.Sqrt - квадратный корень
 // Math.Pow - возведение в степень
 // Convert.ToDouble - преобразует строку в число
-var gipotenuza = Math.Sqrt(Math.Pow(Convert.ToDouble(katet1), 2) + Math.Pow(Convert.ToDouble(katet2), 2));
+var gipotenuza = Math.Sqrt(
+    Math.Pow(
+        Convert.ToDouble(katet1), 2) + 
+    Math.Pow(
+        Convert.ToDouble(katet2), 2));
 
 // выводим результат
-// знак $ перед строкой указывает, что внутри строки в фигурных скобках названия переменных
-Console.WriteLine($"Gipotenuza = {gipotenuza}");
+// знак $ перед строкой указывает, 
+// что внутри строки в фигурных скобках названия переменных
+Console.WriteLine(
+    $"Gipotenuza = {gipotenuza}");
 
 // читаем строку, чтобы консольное окно сразу не закрылось
 Console.Write("Press ENTER to continue...");
