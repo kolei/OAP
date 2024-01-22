@@ -122,6 +122,30 @@ var number2 = Convert.ToInt32(numberList[1]);
 
 1. Опубликуйте результаты в удаленном репозитории и скиньте ссылку преподавателю.
 
+**Ожидаемый результат:**
+
+> Задача: [A+B](https://acmp.ru/index.asp?main=task&id_task=1)
+>
+> Требуется сложить два целых числа А и В.
+>
+> Решение:
+>
+>```cs
+>Console.Write("Введите два целых числа через пробел: ");
+>var inputString = Console.ReadLine();
+>var stringParts = inputString.Split(' ');
+>Console.WriteLine(Convert.ToInt32(stringParts[0]) + Convert.ToInt32(stringParts[1]));
+>```
+>
+>Результат работы:
+>```
+>/home/kei/RiderProjects/ConsoleApp1/ConsoleApp1/bin/Debug/net6.0/ConsoleApp1
+>Введите два целых числа через пробел: 2 3
+>5
+>
+>Process finished with exit code 0.
+>```
+
 ## Примечания
 
 Народ спрашивает как в Rider-е создавать файлы (`.gitignore` и `readme.md`) и где делать репозиторий.
