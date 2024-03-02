@@ -1,16 +1,12 @@
-<table style="width: 100%;"><tr><td style="width: 40%;">
-<a href="../articles/t5_delegate.md">Делегаты, события, лямбды.
-</a></td><td style="width: 20%;">
-<a href="../readme.md">Содержание
-</a></td><td style="width: 40%;">
-<a href="../articles/t5_files.md">Работа с файлами.
-</a></td><tr></table>
+Предыдущая лекция | &nbsp; | Следующая лекция
+:----------------:|:----------:|:----------------:
+[Делегаты, события и лямбды](./t5_delegate.md) | [Содержание](../readme.md#тема-5-продвинутый-c-функции-лямбды-исключения-работа-с-файлами-многопоточность-регулярные-выражения) | [Работа с файловой системой и файлами.](./t5_files.md)
 
 <!-- https://metanit.com/sharp/tutorial/2.14.php -->
 
 # Исключения
 
-В любой, особенно большой, программе могут возникать ошибки, приводящие к ее неработоспособности или к тому, что программа делает не то, что должна. Причин возникновения ошибок много.
+В любой, особенно большой, программе могут возникать ошибки, приводящие к её неработоспособности или к тому, что программа делает не то, что должна. Причин возникновения ошибок много.
 
 Программист может сделать ошибку в употреблении самого языка программирования. Другими словами, выразиться так, как выражаться не положено. Например, начать имя переменной с цифры или забыть поставить двоеточие в заголовке сложной инструкции. Подобные ошибки называют синтаксическими, они нарушают синтаксис и пунктуацию языка. IDE, встретив ошибочное выражение, не знает как его интерпретировать. Поэтому  выводит соответствующее сообщение, указав на место возникновения ошибки.
 
@@ -35,62 +31,52 @@ finally
 }
 ```
 
-При использовании блока `try...catch..finally` вначале выполняются все инструкции в блоке **try**. Если в этом блоке не возникло исключений, то после его выполнения начинает выполняться блок **finally**. И затем конструкция `try..catch..finally` завершает свою работу.
+При использовании блока `try...catch...finally` вначале выполняются все инструкции в блоке **try**. Если в этом блоке не возникло исключений, то после его выполнения начинает выполняться блок **finally**. И затем конструкция `try..catch...finally` завершает свою работу.
 
-Если же в блоке **try** вдруг возникает исключение, то обычный порядок выполнения останавливается, и среда CLR начинает искать блок **catch**, который может обработать данное исключение. Если нужный блок **catch** найден, то он выполняется, и после его завершения выполняется блок **finally**.
+Если же в блоке **try** вдруг возникает исключение, то обычный порядок выполнения останавливается, и среда выполнения кода начинает искать блок **catch**, который может обработать данное исключение. Если нужный блок **catch** найден, то он выполняется, и после его завершения выполняется блок **finally**.
 
-Если нужный блок catch не найден, то при возникновении исключения программа аварийно завершает свое выполнение.
+Если нужный блок **catch** не найден, то при возникновении исключения программа аварийно завершает свое выполнение.
 
 Рассмотрим следующий пример:
 
 ```cs
-class Program
-{
-    static void Main(string[] args)
-    {
-        int x = 5;
-        int y = x / 0;
-        Console.WriteLine($"Результат: {y}");
-        Console.WriteLine("Конец программы");
-        Console.Read();
-    }
-}
+int x = 5;
+int y = x / 0;
+Console.WriteLine($"Результат: {y}");
+Console.WriteLine("Конец программы");
+Console.Read();
 ```
 
-В данном случае происходит деление числа на 0, что приведет к генерации исключения. И при запуске приложения в режиме отладки мы увидим в Visual Studio окошко, которое информирует об исключении:
+В данном случае происходит деление числа на `0`, что приведет к генерации исключения. И при запуске приложения в консоли увидим сообщение об ошибке:
 
-<!-- TODO добавить скриншот -->
+```
+Unhandled exception. System.DivideByZeroException: Attempted to divide by zero.
+   at Program.<Main>$(String[] args) in /home/kei/RiderProjects/tryCatch/Program.cs:line 2
 
+Process finished with exit code 134.
+```
 
-В этом окошке мы видим, что возникло исключение, которое представляет тип System.DivideByZeroException, то есть попытка деления на ноль. С помощью пункта View Details можно посмотреть более детальную информацию об исключении.
-
-И в этом случае единственное, что нам остается, это завершить выполнение программы.
+Здесь мы видим, что возникло исключение, которое представляет тип `System.DivideByZeroException`, то есть попытка деления на ноль. Ниже указано в каком файле и в какой строке файла произошло это исключение.
 
 Чтобы избежать подобного аварийного завершения программы, следует использовать для обработки исключений конструкцию `try...catch...finally`. Так, перепишем пример следующим образом:
 
 ```cs
-class Program
+try
 {
-    static void Main(string[] args)
-    {
-        try
-        {
-            int x = 5;
-            int y = x / 0;
-            Console.WriteLine($"Результат: {y}");
-        }
-        catch
-        {
-            Console.WriteLine("Возникло исключение!");
-        }
-        finally
-        {
-            Console.WriteLine("Блок finally");
-        }
-        Console.WriteLine("Конец программы");
-        Console.Read();
-    }
+    int x = 5;
+    int y = x / 0;
+    Console.WriteLine($"Результат: {y}");
 }
+catch
+{
+    Console.WriteLine("Возникло исключение!");
+}
+finally
+{
+    Console.WriteLine("Блок finally");
+}
+Console.WriteLine("Конец программы");
+Console.Read();
 ```
 
 В данном случае у нас опять же возникнет исключение в блоке **try**, так как мы пытаемся разделить на ноль. И дойдя до строки
@@ -148,41 +134,35 @@ finally
 Ряд исключительных ситуаций может быть предвиден разработчиком. Например, пусть программа предусматривает ввод числа и вывод его квадрата:
 
 ```cs
-static void Main(string[] args)
-{
-    Console.WriteLine("Введите число");
-    int x = Int32.Parse(Console.ReadLine());
- 
-    x *= x;
-    Console.WriteLine("Квадрат числа: " + x);
-    Console.Read();
-}
+Console.WriteLine("Введите число");
+int x = Int32.Parse(Console.ReadLine());
+
+x *= x;
+Console.WriteLine("Квадрат числа: " + x);
+Console.Read();
 ```
 
-Если пользователь введет не число, а строку, какие-то другие символы, то программа выпадет в ошибку. С одной стороны, здесь как раз та ситуация, когда можно применить блок `try..catch`, чтобы обработать возможную ошибку. Однако гораздо оптимальнее было бы проверить допустимость преобразования:
+Если пользователь введет не число, а строку, какие-то другие символы, то программа выпадет в ошибку. С одной стороны, здесь как раз та ситуация, когда можно применить блок `try...catch`, чтобы обработать возможную ошибку. Однако гораздо оптимальнее было бы проверить допустимость преобразования:
 
 ```cs
-static void Main(string[] args)
+Console.WriteLine("Введите число");
+int x;
+string input = Console.ReadLine();
+if (Int32.TryParse(input, out x))
 {
-    Console.WriteLine("Введите число");
-    int x;
-    string input = Console.ReadLine();
-    if (Int32.TryParse(input, out x))
-    {
-        x *= x;
-        Console.WriteLine("Квадрат числа: " + x);
-    }
-    else
-    {
-        Console.WriteLine("Некорректный ввод");
-    }
-    Console.Read();
+    x *= x;
+    Console.WriteLine("Квадрат числа: " + x);
 }
+else
+{
+    Console.WriteLine("Некорректный ввод");
+}
+Console.Read();
 ```
 
-Метод `Int32.TryParse()` возвращает *true*, если преобразование можно осуществить, и *false* - если нельзя. При допустимости преобразования переменная "x" будет содержать введенное число. Так, не используя `try...catch` можно обработать возможную исключительную ситуацию.
+Метод `Int32.TryParse()` возвращает **true**, если преобразование можно осуществить, и **false** - если нельзя. При допустимости преобразования переменная `x` будет содержать введенное число. Так, не используя `try...catch` можно обработать возможную исключительную ситуацию.
 
-С точки зрения производительности использование блоков `try..catch` более накладно, чем применение условных конструкций. Поэтому по возможности вместо `try..catch` лучше использовать условные конструкции на проверку исключительных ситуаций.
+С точки зрения производительности использование блоков `try...catch` более накладно, чем применение условных конструкций. ~~Поэтому по возможности вместо `try..catch` лучше использовать условные конструкции на проверку исключительных ситуаций.~~ Сейчас уклон при разработке не в скорость работы программы, а в скорость разработки, поэтому рекомендуется применять блоки `try...catch...finally`, т.к. при этом получается более короткий и наглядный код.
 
 ## Блок catch и фильтры исключений
 
@@ -206,7 +186,7 @@ catch (тип_исключения)
 }
 ```
 
-Обрабатывает только те исключения, которые соответствуют типу, указаному в скобках после оператора **catch**.
+Такой блок обрабатывает только те исключения, которые соответствуют типу, указаному в скобках после оператора **catch**.
 
 Например, обработаем только исключения типа *DivideByZeroException*:
 
@@ -232,7 +212,7 @@ catch (тип_исключения имя_переменной)
 }
 ```
 
-Обрабатывает только те исключения, которые соответствуют типу, указаному в скобках после оператора **catch**. А вся информация об исключении помещается в переменную данного типа. Например:
+В таком варианте обрабатывает только те исключения, которые соответствуют типу, указаному в скобках после оператора **catch**. А вся информация об исключении помещается в переменную данного типа. Например:
 
 ```cs
 try
@@ -247,7 +227,7 @@ catch(DivideByZeroException ex)
 }
 ```
 
-Фактически этот случай аналогичен предыдущему за тем исключением, что здесь используется переменная. В данном случае в переменную *ex*, которая представляет тип *DivideByZeroException*, помещается информация о возникшем исключени. И с помощью свойства Message мы можем получить сообщение об ошибке.
+Фактически этот случай аналогичен предыдущему за тем исключением, что здесь используется переменная. В данном случае в переменную *ex*, которая представляет тип *DivideByZeroException*, помещается информация о возникшем исключени. И с помощью свойства _Message_ мы можем получить сообщение об ошибке.
 
 Если нам не нужна информация об исключении, то переменную можно не использовать как в предыдущем случае.
 
@@ -301,23 +281,20 @@ catch(DivideByZeroException ex)
 Например, обработаем исключения типа **Exception**:
 
 ```cs
-static void Main(string[] args)
+try
 {
-    try
-    {
-        int x = 5;
-        int y = x / 0;
-        Console.WriteLine($"Результат: {y}");
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"Исключение: {ex.Message}");
-        Console.WriteLine($"Метод: {ex.TargetSite}");
-        Console.WriteLine($"Трассировка стека: {ex.StackTrace}");
-    }
- 
-    Console.Read();
+    int x = 5;
+    int y = x / 0;
+    Console.WriteLine($"Результат: {y}");
 }
+catch (Exception ex)
+{
+    Console.WriteLine($"Исключение: {ex.Message}");
+    Console.WriteLine($"Метод: {ex.TargetSite}");
+    Console.WriteLine($"Трассировка стека: {ex.StackTrace}");
+}
+
+Console.Read();
 ```
 
 ```
@@ -325,7 +302,6 @@ static void Main(string[] args)
 Метод: Void Main(System.String[])
 Трассировка стека:    в oap_labs.Program.Main(String[] args) в C:\Users\John\source\repos\oap_labs\oap_labs\Program.cs:строка 16
 ```
-
 
 Так как тип **Exception** является базовым типом для всех исключений, то выражение `catch (Exception ex)` будет обрабатывать все исключения, которые могут возникнуть.
 
@@ -346,28 +322,25 @@ static void Main(string[] args)
 И при необходимости мы можем разграничить обработку различных типов исключений, включив дополнительные блоки **catch**:
 
 ```cs
-static void Main(string[] args)
+try
 {
-    try
-    {
-        int[] numbers = new int[4];
-        numbers[7] = 9;     // IndexOutOfRangeException
- 
-        int x = 5;
-        int y = x / 0;  // DivideByZeroException
-        Console.WriteLine($"Результат: {y}");
-    }
-    catch (DivideByZeroException)
-    {
-        Console.WriteLine("Возникло исключение DivideByZeroException");
-    }
-    catch (IndexOutOfRangeException ex)
-    {
-        Console.WriteLine(ex.Message);
-    }
-             
-    Console.Read();
+    int[] numbers = new int[4];
+    numbers[7] = 9;     // IndexOutOfRangeException
+
+    int x = 5;
+    int y = x / 0;  // DivideByZeroException
+    Console.WriteLine($"Результат: {y}");
 }
+catch (DivideByZeroException)
+{
+    Console.WriteLine("Возникло исключение DivideByZeroException");
+}
+catch (IndexOutOfRangeException ex)
+{
+    Console.WriteLine(ex.Message);
+}
+            
+Console.Read();
 ```
 
 В данном случае блоки **catch** обрабатывают исключения типов *IndexOutOfRangeException* и *DivideByZeroException*. Когда в блоке **try** возникнет исключение, то CLR будет искать нужный блок **catch** для обработки исключения. Так, в данном случае на строке
@@ -383,25 +356,22 @@ numbers[7] = 9;
 Рассмотрим другую ситуацию:
 
 ```cs
-static void Main(string[] args)
+try
 {
-    try
-    {
-        object obj = "you";
-        int num = (int)obj;     // InvalidCastException
-        Console.WriteLine($"Результат: {num}");
-    }
-    catch (DivideByZeroException)
-    {
-        Console.WriteLine("Возникло исключение DivideByZeroException");
-    }
-    catch (IndexOutOfRangeException)
-    {
-        Console.WriteLine("Возникло исключение IndexOutOfRangeException");
-    }
-             
-    Console.Read();
+    object obj = "you";
+    int num = (int)obj;     // InvalidCastException
+    Console.WriteLine($"Результат: {num}");
 }
+catch (DivideByZeroException)
+{
+    Console.WriteLine("Возникло исключение DivideByZeroException");
+}
+catch (IndexOutOfRangeException)
+{
+    Console.WriteLine("Возникло исключение IndexOutOfRangeException");
+}
+            
+Console.Read();
 ```
 
 В данном случае в блоке **try** генерируется исключение типа *InvalidCastException*, однако соответствующего блока **catch** для обработки данного исключения нет. Поэтому программа аварийно завершит свое выполнение.
@@ -409,28 +379,25 @@ static void Main(string[] args)
 Мы также можем определить для *InvalidCastException* свой блок **catch**, однако суть в том, что теоретически в коде могут быть сгенерированы сами различные типы исключений. А определять для всех типов исключений блоки **catch**, если обработка исключений однотипна, не имеет смысла. И в этом случае мы можем определить блок **catch** для базового типа *Exception*:
 
 ```cs
-static void Main(string[] args)
+try
 {
-    try
-    {
-        object obj = "you";
-        int num = (int)obj;     // InvalidCastException
-        Console.WriteLine($"Результат: {num}");
-    }
-    catch (DivideByZeroException)
-    {
-        Console.WriteLine("Возникло исключение DivideByZeroException");
-    }
-    catch (IndexOutOfRangeException)
-    {
-        Console.WriteLine("Возникло исключение IndexOutOfRangeException");
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"Исключение: {ex.Message}");
-    }  
-    Console.Read();
+    object obj = "you";
+    int num = (int)obj;     // InvalidCastException
+    Console.WriteLine($"Результат: {num}");
 }
+catch (DivideByZeroException)
+{
+    Console.WriteLine("Возникло исключение DivideByZeroException");
+}
+catch (IndexOutOfRangeException)
+{
+    Console.WriteLine("Возникло исключение IndexOutOfRangeException");
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Исключение: {ex.Message}");
+}  
+Console.Read();
 ```
 
 И в данном случае блок `catch (Exception ex){}` будет обрабатывать все исключения кроме *DivideByZeroException* и *IndexOutOfRangeException*. При этом блоки **catch** для более общих, более базовых исключений следует помещать в конце - после блоков **catch** для более конкретный, специализированных типов. Так как CLR выбирает для обработки исключения первый блок **catch**, который соответствует типу сгенерированного исключения. Поэтому в данном случае сначала обрабатывается исключение *DivideByZeroException* и *IndexOutOfRangeException*, и только потом *Exception* (так как *DivideByZeroException* и *IndexOutOfRangeException* наследуется от класса *Exception*).
@@ -442,21 +409,16 @@ static void Main(string[] args)
 Допустим, у нас в программе будет ограничение по возрасту:
 
 ```cs
-class Program
+try
 {
-    static void Main(string[] args)
-    {
-        try
-        {
-            Person p = new Person { Name = "Tom", Age = 17 };
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Ошибка: {ex.Message}");
-        }
-        Console.Read();
-    }
+    Person p = new Person { Name = "Tom", Age = 17 };
 }
+catch (Exception ex)
+{
+    Console.WriteLine($"Ошибка: {ex.Message}");
+}
+Console.Read();
+
 class Person
 {
     private int age;
@@ -479,9 +441,9 @@ class Person
 }
 ```
 
-В классе Person при установке возраста происходит проверка, и если возраст меньше 18, то выбрасывается исключение. Класс *Exception* принимает в конструкторе в качестве параметра строку, которое затем передается в его свойство Message.
+В классе **Person** при установке возраста происходит проверка, и если возраст меньше 18, то выбрасывается исключение. Класс *Exception* принимает в конструкторе в качестве параметра строку, которое затем передается в его свойство _Message_.
 
-Но иногда удобнее использовать свои классы исключений. Например, в какой-то ситуации мы хотим обработать определенным образом только те исключения, которые относятся к классу *Person*. Для этих целей мы можем сделать специальный класс *PersonException*:
+Но иногда удобнее использовать свои классы исключений. Например, в какой-то ситуации мы хотим обработать определенным образом только те исключения, которые относятся к классу *(Person)*. Для этих целей мы можем сделать специальный класс **PersonException**:
 
 ```cs
 class PersonException : Exception
@@ -492,24 +454,19 @@ class PersonException : Exception
 }
 ```
 
-По сути класс кроме пустого конструктора ничего не имеет, и то в конструкторе мы просто обращаемся к конструктору базового класса *Exception*, передавая в него строку *message*. Но теперь мы можем изменить класс *Person*, чтобы он выбрасывал исключение именно этого типа и соответственно в основной программе обрабатывать это исключение:
+По сути класс кроме пустого конструктора ничего не имеет, и то в конструкторе мы просто обращаемся к конструктору базового класса **Exception**, передавая в него строку *message*. Но теперь мы можем изменить класс **Person**, чтобы он выбрасывал исключение именно этого типа и соответственно в основной программе обрабатывать это исключение:
 
 ```cs
-class Program
+try
 {
-    static void Main(string[] args)
-    {
-        try
-        {
-            Person p = new Person { Name = "Tom", Age = 17 };
-        }
-        catch (PersonException ex)
-        {
-            Console.WriteLine("Ошибка: " + ex.Message);
-        }
-        Console.Read();
-    }
+    Person p = new Person { Name = "Tom", Age = 17 };
 }
+catch (PersonException ex)
+{
+    Console.WriteLine("Ошибка: " + ex.Message);
+}
+Console.Read();
+
 class Person
 {
     private int age;
@@ -527,7 +484,7 @@ class Person
 }
 ```
 
-Однако необязательно наследовать свой класс исключений именно от типа *Exception*, можно взять какой-нибудь другой производный тип. Например, в данном случае мы можем взять тип *ArgumentException*, который представляет исключение, генерируемое в результате передачи аргументу метода некорректного значения:
+Однако необязательно наследовать свой класс исключений именно от типа **Exception**, можно взять какой-нибудь другой производный тип. Например, в данном случае мы можем взять тип **ArgumentException**, который представляет исключение, генерируемое в результате передачи аргументу метода некорректного значения:
 
 ```cs
 class PersonException : ArgumentException
@@ -565,28 +522,25 @@ class Person
         set
         {
             if (value < 18)
-                throw new PersonException("Лицам до 18 регистрация запрещена", value);
+                throw new PersonException(
+                    "Лицам до 18 регистрация запрещена",
+                    value);
             else
                 age = value;
         }
     }
 }
-class Program
+
+try
 {
-    static void Main(string[] args)
-    {
-        try
-        {
-            Person p = new Person { Name = "Tom", Age = 13 };
-        }
-        catch (PersonException ex)
-        {
-            Console.WriteLine($"Ошибка: {ex.Message}");
-            Console.WriteLine($"Некорректное значение: {ex.Value}");
-        }
-        Console.Read();
-    }
+    Person p = new Person { Name = "Tom", Age = 13 };
 }
+catch (PersonException ex)
+{
+    Console.WriteLine($"Ошибка: {ex.Message}");
+    Console.WriteLine($"Некорректное значение: {ex.Value}");
+}
+Console.Read();
 ```
 
 ## Поиск блока catch при обработке исключений
@@ -596,68 +550,64 @@ class Program
 Например, рассмотрим следующую программу:
 
 ```cs
-using System;
- 
-namespace HelloApp
+try
 {
-    class Program
+    TestClass.Method1();
+}
+catch (DivideByZeroException ex)
+{
+    Console.WriteLine($"Catch в Main : {ex.Message}");
+}
+finally
+{
+    Console.WriteLine("Блок finally в Main");
+}
+Console.WriteLine("Конец метода Main");
+Console.Read();
+
+class TestClass
+{
+    public static void Method1()
     {
-        static void Main(string[] args)
+        try
         {
-            try
-            {
-                TestClass.Method1();
-            }
-            catch (DivideByZeroException ex)
-            {
-                Console.WriteLine($"Catch в Main : {ex.Message}");
-            }
-            finally
-            {
-                Console.WriteLine("Блок finally в Main");
-            }
-            Console.WriteLine("Конец метода Main");
-            Console.Read();
+            Method2();
         }
+        catch (IndexOutOfRangeException ex)
+        {
+            Console.WriteLine($"Catch в Method1 : {ex.Message}");
+        }
+        finally
+        {
+            Console.WriteLine("Блок finally в Method1");
+        }
+        Console.WriteLine("Конец метода Method1");
     }
-    class TestClass
+    static void Method2()
     {
-        public static void Method1()
+        try
         {
-            try
-            {
-                Method2();
-            }
-            catch (IndexOutOfRangeException ex)
-            {
-                Console.WriteLine($"Catch в Method1 : {ex.Message}");
-            }
-            finally
-            {
-                Console.WriteLine("Блок finally в Method1");
-            }
-            Console.WriteLine("Конец метода Method1");
+            int x = 8;
+            int y = x / 0;
         }
-        static void Method2()
+        finally
         {
-            try
-            {
-                int x = 8;
-                int y = x / 0;
-            }
-            finally
-            {
-                Console.WriteLine("Блок finally в Method2");
-            }
-            Console.WriteLine("Конец метода Method2");
+            Console.WriteLine("Блок finally в Method2");
         }
+        Console.WriteLine("Конец метода Method2");
     }
 }
 ```
 
-В данном случае стек вызовов выглядит следующим образом: метод *Main* вызывает метод *Method1*, который, в свою очередь, вызывает метод *Method2*. И в методе *Method2* генерируется исключение *DivideByZeroException*. Визуально стек вызовов можно представить следующим образом:
+В данном случае стек вызовов выглядит следующим образом: метод *Method1* вызывает метод *Method2*. И в методе *Method2* генерируется исключение *DivideByZeroException*. Визуально стек вызовов можно представить следующим образом:
 
-![Поиск блока catch при обработке исключения в C#](../img/05001.png)
+```
+Блок finally в Method2
+Блок finally в Method1
+Catch в Main : Attempted to divide by zero.
+Блок finally в Main
+Конец метода Main
+```
 
 Внизу стека метод *Main*, с которого началось выполнение, и на самом верху метод *Method2*.
 
@@ -699,7 +649,7 @@ finally
 }
 ```
 
-Система также ищет в этой конструкции блок catch, который обрабатывает исключение *DivideByZeroException*. Однако здесь также подобный блок **catch** отсутствует.
+Система также ищет в этой конструкции блок **catch**, который обрабатывает исключение **DivideByZeroException**. Однако здесь также подобный блок **catch** отсутствует.
 
 Система далее опускается в стеке вызовов в метод *Main*, который вызывал *Method1*. Здесь вызов *Method1* помещен в конструкцию `try..catch`
 
@@ -776,26 +726,24 @@ Catch в Main: Попытка деления на нуль.
 Например, в нашей программе происходит ввод строки, и мы хотим, чтобы, если длина строки будет больше 6 символов, возникало исключение:
 
 ```cs
-static void Main(string[] args)
+try
 {
-    try
+    Console.Write("Введите строку: ");
+    string message = Console.ReadLine();
+    if (message.Length > 6)
     {
-        Console.Write("Введите строку: ");
-        string message = Console.ReadLine();
-        if (message.Length > 6)
-        {
-            throw new Exception("Длина строки больше 6 символов");
-        }
+        throw new Exception(
+            "Длина строки больше 6 символов");
     }
-    catch (Exception e)
-    {
-        Console.WriteLine($"Ошибка: {e.Message}");
-    }
-    Console.Read();
 }
+catch (Exception e)
+{
+    Console.WriteLine($"Ошибка: {e.Message}");
+}
+Console.Read();
 ```
 
-После оператора **throw** указывается объект исключения, через конструктор которого мы можем передать сообщение об ошибке. Естественно вместо типа *Exception* мы можем использовать объект любого другого типа исключений.
+После оператора **throw** указывается объект исключения, через конструктор которого мы можем передать сообщение об ошибке. Естественно вместо типа **Exception** мы можем использовать объект любого другого типа исключений.
 
 Затем в блоке **catch** сгенерированное нами исключение будет обработано.
 
@@ -810,7 +758,8 @@ try
         string message = Console.ReadLine();
         if (message.Length > 6)
         {
-            throw new Exception("Длина строки больше 6 символов");
+            throw new Exception(
+                "Длина строки больше 6 символов");
         }
     }
     catch
@@ -1093,10 +1042,32 @@ string companyName = user?.Phone?.Company?.Name ?? "не установлено"
 Console.WriteLine(companyName);
 ```
 
-<table style="width: 100%;"><tr><td style="width: 40%;">
-<a href="../articles/t5_delegate.md">Делегаты, события, лямбды.
-</a></td><td style="width: 20%;">
-<a href="../readme.md">Содержание
-</a></td><td style="width: 40%;">
-<a href="../articles/t5_files.md">Работа с файлами.
-</a></td><tr></table>
+---
+
+Задание:
+
+Реализовать все примеры из лекции и привести текст примера и текст результата, например:
+
+># Конспект лекции "Исключения"
+>
+>## Деление на `0`
+>
+>```cs
+>int x = 5;
+>int y = x / 0;
+>Console.WriteLine($"Результат: {y}");
+>Console.WriteLine("Конец программы");
+>Console.Read();
+>```
+>
+>```
+>Unhandled exception. System.DivideByZeroException: >Attempted to divide by zero.
+>   at Program.<Main>$(String[] args) in /home/kei/>RiderProjects/tryCatch/Program.cs:line 2
+>
+>Process finished with exit code 134.
+>```
+
+
+Предыдущая лекция | &nbsp; | Следующая лекция
+:----------------:|:----------:|:----------------:
+[Делегаты, события и лямбды](./t5_delegate.md) | [Содержание](../readme.md#тема-5-продвинутый-c-функции-лямбды-исключения-работа-с-файлами-многопоточность-регулярные-выражения) | [Работа с файловой системой и файлами.](./t5_files.md)
