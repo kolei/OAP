@@ -1,8 +1,8 @@
 Предыдущая лекция | &nbsp; | Следующая лекция
 :----------------:|:----------:|:----------------:
-[Исключения. Null.](./t5_exception.md) | [Содержание](../readme.md#тема-5-продвинутый-c-функции-лямбды-исключения-работа-с-файлами-многопоточность-регулярные-выражения) | [Многопоточность. Потоки, асинхронные вычисления](./t5_thread_async.md)
+[Многопоточность. Потоки, асинхронные вычисления](./t5_thread_async.md) | [Содержание](../readme.md#тема-5-продвинутый-c-функции-лямбды-исключения-работа-с-файлами-многопоточность-регулярные-выражения) | [Типы файлов: CSV, XML, JSON.](./t5_file_types.md)
 
-# Работа с потоками и файловой системой
+# Работа с потоками (stream) и файловой системой
 
 Большинство задач в программировании так или иначе связаны с работой с файлами и каталогами. Нам может потребоваться прочитать текст из файла или наоборот произвести запись, удалить файл или целый каталог, не говоря уже о более комплексных задачах, как например, создание текстового редактора и других подобных задачах.
 
@@ -45,15 +45,173 @@ foreach (DriveInfo drive in drives)
 }
 ```
 
-```
-Название: C:\
-Тип: Fixed
-Объем диска: 63757606912
-Свободное пространство: 13795221504
-Метка:
+>У меня на компьютере Linux, поэтому дисков оказалось очень много, под Windows скорее всего будет один
 
-Название: D:\
-Тип: CDRom
+```
+/home/kei/RiderProjects/OAP/stream/bin/Debug/net8.0/stream
+Название: /proc
+Тип: Ram
+Объем диска: 0
+Свободное пространство: 0
+Метка: /proc
+
+Название: /sys
+Тип: Ram
+Объем диска: 0
+Свободное пространство: 0
+Метка: /sys
+
+Название: /dev
+Тип: Ram
+Объем диска: 8236191744
+Свободное пространство: 8236191744
+Метка: /dev
+
+Название: /run
+Тип: Ram
+Объем диска: 8254484480
+Свободное пространство: 8252055552
+Метка: /run
+
+Название: /sys/firmware/efi/efivars
+Тип: Unknown
+Объем диска: 188328
+Свободное пространство: 107141
+Метка: /sys/firmware/efi/efivars
+
+Название: /dev/pts
+Тип: Ram
+Объем диска: 0
+Свободное пространство: 0
+Метка: /dev/pts
+
+Название: /
+Тип: Fixed
+Объем диска: 1006662447104
+Свободное пространство: 862912659456
+Метка: /
+
+Название: /sys/kernel/security
+Тип: Ram
+Объем диска: 0
+Свободное пространство: 0
+Метка: /sys/kernel/security
+
+Название: /dev/shm
+Тип: Ram
+Объем диска: 8254484480
+Свободное пространство: 8211234816
+Метка: /dev/shm
+
+Название: /sys/fs/cgroup
+Тип: Ram
+Объем диска: 0
+Свободное пространство: 0
+Метка: /sys/fs/cgroup
+
+Название: /sys/fs/pstore
+Тип: Fixed
+Объем диска: 0
+Свободное пространство: 0
+Метка: /sys/fs/pstore
+
+Название: /sys/fs/bpf
+Тип: Fixed
+Объем диска: 0
+Свободное пространство: 0
+Метка: /sys/fs/bpf
+
+Название: /proc/sys/fs/binfmt_misc
+Тип: Ram
+Объем диска: 0
+Свободное пространство: 0
+Метка: /proc/sys/fs/binfmt_misc
+
+Название: /dev/mqueue
+Тип: Ram
+Объем диска: 0
+Свободное пространство: 0
+Метка: /dev/mqueue
+
+Название: /dev/hugepages
+Тип: Ram
+Объем диска: 0
+Свободное пространство: 0
+Метка: /dev/hugepages
+
+Название: /sys/kernel/debug
+Тип: Ram
+Объем диска: 0
+Свободное пространство: 0
+Метка: /sys/kernel/debug
+
+Название: /sys/kernel/tracing
+Тип: Fixed
+Объем диска: 0
+Свободное пространство: 0
+Метка: /sys/kernel/tracing
+
+Название: /sys/fs/fuse/connections
+Тип: Ram
+Объем диска: 0
+Свободное пространство: 0
+Метка: /sys/fs/fuse/connections
+
+Название: /sys/kernel/config
+Тип: Ram
+Объем диска: 0
+Свободное пространство: 0
+Метка: /sys/kernel/config
+
+Название: /tmp
+Тип: Ram
+Объем диска: 8254484480
+Свободное пространство: 8238710784
+Метка: /tmp
+
+Название: /boot/efi
+Тип: Fixed
+Объем диска: 313942016
+Свободное пространство: 302096384
+Метка: /boot/efi
+
+Название: /var/lib/docker/overlay2/4a2802316a49f1a30573524d0059ce49f6cd6cfe40608b77efb6febce3b2d66d/merged
+Тип: Unknown
+
+Название: /var/lib/docker/overlay2/a91156ea1396c9882176076645afbc6b4c5ded5492d9226442a6c5b55d07fd67/merged
+Тип: Unknown
+
+Название: /var/lib/docker/overlay2/de7b5cae3507be9b60ff7a3ddb8375e6968f465e3d926eb1c56c0206c8e2e17a/merged
+Тип: Unknown
+
+Название: /var/lib/docker/overlay2/f6ab6ef9b79dabd97d12c898d4239d1fb173ebcd83a1abf5c22704e730390115/merged
+Тип: Unknown
+
+Название: /var/lib/docker/overlay2/cf4ba0731412147587fe830cbcc73005b3f660443a73da88977222e55c304e27/merged
+Тип: Unknown
+
+Название: /run/docker/netns/default
+Тип: Unknown
+
+Название: /run/docker/netns/fe8e9119c528
+Тип: Unknown
+
+Название: /run/user/1000
+Тип: Ram
+Объем диска: 1650896896
+Свободное пространство: 1650798592
+Метка: /run/user/1000
+
+Название: /run/user/1000/doc
+Тип: Unknown
+Unhandled exception. System.UnauthorizedAccessException: Access to the path is denied.
+ ---> System.IO.IOException: Operation not permitted
+   --- End of inner exception stack trace ---
+   at System.IO.DriveInfo.CheckStatfsResultAndThrowIfNecessary(Int32 result)
+   at System.IO.DriveInfo.get_TotalSize()
+   at Program.<Main>$(String[] args) in /home/kei/RiderProjects/OAP/stream/Program.cs:line 9
+
+Process finished with exit code 134.
 ```
 
 ## Работа с каталогами
@@ -1031,6 +1189,205 @@ using (FileStream fs = new FileStream("people.dat", FileMode.OpenOrCreate))
 }
 ```
 
+---
+
+## Задание на дом:
+
+Реализовать примеры из лекции. Привести текст примера и текст результата, например:
+
+># Конспект лекции "Работа с каталогами и файлами"
+>
+>## Список дисков
+>
+>```cs
+>using System;
+>using System.IO;
+> 
+>DriveInfo[] drives = DriveInfo.GetDrives();
+>
+>foreach (DriveInfo drive in drives)
+>{
+>    Console.WriteLine($"Название: {drive.Name}");
+>    Console.WriteLine($"Тип: {drive.DriveType}");
+>    if (drive.IsReady)
+>    {
+>        Console.WriteLine($"Объем диска: {drive.TotalSize}");
+>        Console.WriteLine($"Свободное пространство: {drive.TotalFreeSpace}");
+>        Console.WriteLine($"Метка: {drive.VolumeLabel}");
+>    }
+>    Console.WriteLine();
+>}
+>```
+>
+>Результат работы:
+>
+>```
+>/home/kei/RiderProjects/OAP/stream/bin/Debug/net8.0/stream
+>Название: /proc
+>Тип: Ram
+>Объем диска: 0
+>Свободное пространство: 0
+>Метка: /proc
+>
+>Название: /sys
+>Тип: Ram
+>Объем диска: 0
+>Свободное пространство: 0
+>Метка: /sys
+>
+>Название: /dev
+>Тип: Ram
+>Объем диска: 8236191744
+>Свободное пространство: 8236191744
+>Метка: /dev
+>
+>Название: /run
+>Тип: Ram
+>Объем диска: 8254484480
+>Свободное пространство: 8252055552
+>Метка: /run
+>
+>Название: /sys/firmware/efi/efivars
+>Тип: Unknown
+>Объем диска: 188328
+>Свободное пространство: 107141
+>Метка: /sys/firmware/efi/efivars
+>
+>Название: /dev/pts
+>Тип: Ram
+>Объем диска: 0
+>Свободное пространство: 0
+>Метка: /dev/pts
+>
+>Название: /
+>Тип: Fixed
+>Объем диска: 1006662447104
+>Свободное пространство: 862912659456
+>Метка: /
+>
+>Название: /sys/kernel/security
+>Тип: Ram
+>Объем диска: 0
+>Свободное пространство: 0
+>Метка: /sys/kernel/security
+>
+>Название: /dev/shm
+>Тип: Ram
+>Объем диска: 8254484480
+>Свободное пространство: 8211234816
+>Метка: /dev/shm
+>
+>Название: /sys/fs/cgroup
+>Тип: Ram
+>Объем диска: 0
+>Свободное пространство: 0
+>Метка: /sys/fs/cgroup
+>
+>Название: /sys/fs/pstore
+>Тип: Fixed
+>Объем диска: 0
+>Свободное пространство: 0
+>Метка: /sys/fs/pstore
+>
+>Название: /sys/fs/bpf
+>Тип: Fixed
+>Объем диска: 0
+>Свободное пространство: 0
+>Метка: /sys/fs/bpf
+>
+>Название: /proc/sys/fs/binfmt_misc
+>Тип: Ram
+>Объем диска: 0
+>Свободное пространство: 0
+>Метка: /proc/sys/fs/binfmt_misc
+>
+>Название: /dev/mqueue
+>Тип: Ram
+>Объем диска: 0
+>Свободное пространство: 0
+>Метка: /dev/mqueue
+>
+>Название: /dev/hugepages
+>Тип: Ram
+>Объем диска: 0
+>Свободное пространство: 0
+>Метка: /dev/hugepages
+>
+>Название: /sys/kernel/debug
+>Тип: Ram
+>Объем диска: 0
+>Свободное пространство: 0
+>Метка: /sys/kernel/debug
+>
+>Название: /sys/kernel/tracing
+>Тип: Fixed
+>Объем диска: 0
+>Свободное пространство: 0
+>Метка: /sys/kernel/tracing
+>
+>Название: /sys/fs/fuse/connections
+>Тип: Ram
+>Объем диска: 0
+>Свободное пространство: 0
+>Метка: /sys/fs/fuse/connections
+>
+>Название: /sys/kernel/config
+>Тип: Ram
+>Объем диска: 0
+>Свободное пространство: 0
+>Метка: /sys/kernel/config
+>
+>Название: /tmp
+>Тип: Ram
+>Объем диска: 8254484480
+>Свободное пространство: 8238710784
+>Метка: /tmp
+>
+>Название: /boot/efi
+>Тип: Fixed
+>Объем диска: 313942016
+>Свободное пространство: 302096384
+>Метка: /boot/efi
+>
+>Название: /var/lib/docker/overlay2/4a2802316a49f1a30573524d0059ce49f6cd6cfe40608b77efb6febce3b2d66d/>merged
+>Тип: Unknown
+>
+>Название: /var/lib/docker/overlay2/a91156ea1396c9882176076645afbc6b4c5ded5492d9226442a6c5b55d07fd67/>merged
+>Тип: Unknown
+>
+>Название: /var/lib/docker/overlay2/de7b5cae3507be9b60ff7a3ddb8375e6968f465e3d926eb1c56c0206c8e2e17a/>merged
+>Тип: Unknown
+>
+>Название: /var/lib/docker/overlay2/f6ab6ef9b79dabd97d12c898d4239d1fb173ebcd83a1abf5c22704e730390115/>merged
+>Тип: Unknown
+>
+>Название: /var/lib/docker/overlay2/cf4ba0731412147587fe830cbcc73005b3f660443a73da88977222e55c304e27/>merged
+>Тип: Unknown
+>
+>Название: /run/docker/netns/default
+>Тип: Unknown
+>
+>Название: /run/docker/netns/fe8e9119c528
+>Тип: Unknown
+>
+>Название: /run/user/1000
+>Тип: Ram
+>Объем диска: 1650896896
+>Свободное пространство: 1650798592
+>Метка: /run/user/1000
+>
+>Название: /run/user/1000/doc
+>Тип: Unknown
+>Unhandled exception. System.UnauthorizedAccessException: Access to the path is denied.
+> ---> System.IO.IOException: Operation not permitted
+>   --- End of inner exception stack trace ---
+>   at System.IO.DriveInfo.CheckStatfsResultAndThrowIfNecessary(Int32 result)
+>   at System.IO.DriveInfo.get_TotalSize()
+>   at Program.<Main>$(String[] args) in /home/kei/RiderProjects/OAP/stream/Program.cs:line 9
+>
+>Process finished with exit code 134.
+>```
+
 Предыдущая лекция | &nbsp; | Следующая лекция
 :----------------:|:----------:|:----------------:
-[Исключения. Null.](./t5_exception.md) | [Содержание](../readme.md#тема-5-продвинутый-c-функции-лямбды-исключения-работа-с-файлами-многопоточность-регулярные-выражения) | [Многопоточность. Потоки, асинхронные вычисления](./t5_thread_async.md)
+[Многопоточность. Потоки, асинхронные вычисления](./t5_thread_async.md) | [Содержание](../readme.md#тема-5-продвинутый-c-функции-лямбды-исключения-работа-с-файлами-многопоточность-регулярные-выражения) | [Типы файлов: CSV, XML, JSON.](./t5_file_types.md)

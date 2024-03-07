@@ -111,8 +111,8 @@
 
 1. [Организация и использование функций.](./articles/lab5_function.md)
 1. [Исключения. NULL.](./articles/lab5_try_null.md)
-1. [Работа с файлами](./articles/lab5_files.md)
 1. [Асинхронные вычисления.](./articles/lab5_async.md)
+1. [Работа с файлами](./articles/lab5_files.md)
 1. [Типы файлов, сериализация.](./articles/lab5_file_types.md)
 1. [Регулярные выражения.](./articles/lab5_regex.md)
 
