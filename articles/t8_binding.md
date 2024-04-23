@@ -6,35 +6,22 @@
 
 ## Введение в привязку данных
 
-В WPF привязка (binding) является мощным инструментом программирования, без которого не обходится ни одно серьёзное приложение.
+В WPF привязка (**binding**) является мощным инструментом программирования, без которого не обходится ни одно серьёзное приложение.
 
 Привязка подразумевает взаимодействие двух объектов: источника и приемника. Объект-приемник создает привязку к определенному свойству объекта-источника. В случае модификации объекта-источника, объект-приемник также будет модифицирован. Например, простейшая форма с использованием привязки:
 
 ```xml
-<Window 
-    x:Class="BindingApp.MainWindow"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:local="clr-namespace:BindingApp"
-    mc:Ignorable="d"
-    Title="MainWindow" 
-    Height="250" 
-    Width="300"
->
-    <StackPanel>
-        <TextBox 
-            x:Name="myTextBox" 
-            Height="30" />
-        <TextBlock 
-            x:Name="myTextBlock" 
-            Text="{Binding 
-                ElementName=myTextBox,
-                Path=Text}"
-            Height="30" />
-    </StackPanel>
-</Window>
+<StackPanel>
+    <TextBox 
+        x:Name="myTextBox" 
+        Height="30" />
+    <TextBlock 
+        x:Name="myTextBlock" 
+        Text="{Binding 
+            ElementName=myTextBox,
+            Path=Text}"
+        Height="30" />
+</StackPanel>
 ```
 
 ![](../img/08028.png)
@@ -45,7 +32,7 @@
 {Binding ElementName=Имя_объекта-источника, Path=Свойство_объекта-источника}
 ```
 
-То есть в данном случае у нас элемент **TextBox** является источником, а **TextBlock** - приемником привязки. Свойство *Text* элемента **TextBlock** привязывается к свойству *Text* элемента **TextBox**. В итоге при осуществлении ввода в текстовое поле синхронно будут происходить изменения в текстовом блоке.
+То есть в данном случае у нас элемент **TextBox** (поле ввода) является источником, а **TextBlock** (простой текст) - приемником привязки. Свойство *Text* элемента **TextBlock** привязывается к свойству *Text* элемента **TextBox**. В итоге при осуществлении ввода в текстовое поле синхронно будут происходить изменения в текстовом блоке.
 
 ### Работа с привязкой в C#
 
@@ -55,7 +42,7 @@
 Binding binding = BindingOperations.GetBinding(myTextBlock, TextBlock.TextProperty);
 ```
 
-В данном случае получаем привязку для свойства зависимостей TextProperty элемента myTextBlock.
+В данном случае получаем привязку для свойства зависимостей _TextProperty_ элемента _myTextBlock_.
 
 Также можно полностью установить привязку в коде C#:
 
@@ -156,6 +143,12 @@ BindingOperations.ClearAllBindings(myTextBlock);
 
 ### Свойство Source
 
+>Модель WPF предлагает очень удобный функционал: возможность хранить данные как ресурс, локально для элемента управления, локально для всего окна либо глобально для всего приложения. Данные могут быть любыми по факту, начиная от текущей информации, заканчивая иерархией элементов WPF. Это позволяет разместить данные в одном месте и после этого использовать их в разных местах, что может пригодится при разработке.
+>
+>Этот функционал часто используется для работы со стилями и шаблонами, которые мы еще будем обсуждать в руководстве, но, как будет показано в этой главе - область применения ресурсов очень широкая. 
+>
+>Ресурсы в WPF имеют ключ (атрибут `x:Key`), с помощью которого становится возможным сослаться на эти ресурсы из любой другой части приложения, используя ключ с выражением разметки _StaticResource_. В этом примере я просто сохранил строку в ресурсах, которую позже использовал в двух разных элементах **TextBlock**.
+
 Свойство **Source** позволяет установить привязку даже к тем объектам, которые не являются элементами управления WPF. Например, определим класс **Phone**:
 
 ```cs
@@ -170,63 +163,81 @@ class Phone
 Теперь создадим объект этого класса и определим к нему привязку:
 
 ```xml
-<Window 
-    x:Class="BindingApp.MainWindow"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:local="clr-namespace:BindingApp"
-    mc:Ignorable="d"
-    Title="MainWindow" 
-    Height="150" 
-    Width="300"
->
-    <Window.Resources>
-        <local:Phone 
-            x:Key="nexusPhone" 
-            Title="Nexus X5" 
-            Company="Google" 
-            Price="25000" />
-    </Window.Resources>
-    <Grid Background="Black">
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <TextBlock 
-            Text="Модель:" 
-            Foreground="White"/>
-        <TextBlock 
-            x:Name="titleTextBlock" 
-            Text="{Binding 
-                Source={StaticResource nexusPhone}, 
-                Path=Title}"
-            Foreground="White" 
-            Grid.Column="1"/>
-        <TextBlock 
-            Text="Цена:" 
-            Foreground="White" 
-            Grid.Row="1"/>
-        <TextBlock 
-            x:Name="priceTextBlock" 
-            Text="{Binding 
-                Source={StaticResource nexusPhone}, 
-                Path=Price}"
-            Foreground="White" 
-            Grid.Column="1" 
-            Grid.Row="1"/>
-    </Grid>
-</Window>
+<Window.Resources>
+    <local:Phone 
+        x:Key="nexusPhone" 
+        Title="Nexus X5" 
+        Company="Google" 
+        Price="25000" />
+</Window.Resources>
+<Grid Background="Black">
+    <Grid.RowDefinitions>
+        <RowDefinition />
+        <RowDefinition />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition />
+        <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+    <TextBlock 
+        Text="Модель:" 
+        Foreground="White"/>
+    <TextBlock 
+        x:Name="titleTextBlock" 
+        Text="{Binding 
+            Source={StaticResource nexusPhone}, 
+            Path=Title}"
+        Foreground="White" 
+        Grid.Column="1"/>
+    <TextBlock 
+        Text="Цена:" 
+        Foreground="White" 
+        Grid.Row="1"/>
+    <TextBlock 
+        x:Name="priceTextBlock" 
+        Text="{Binding 
+            Source={StaticResource nexusPhone}, 
+            Path=Price}"
+        Foreground="White" 
+        Grid.Column="1" 
+        Grid.Row="1"/>
+</Grid>
+```
+
+В примере выше ресурсы расположены на уровне окна (Window), так, что будем в состоянии их использовать с любого места в окне.
+
+Если Вы нуждаетесь в ресурсе лишь для одного выбранного элемента - можете сделать это локально, путем добавления ресурса к элементу управления, а не всему окну. Это работает так же, как и ресурсы для окна, разница состоит в том, можно ли будет "достучаться" до них с уровня элемента, в котором вы сохранили ресурс.
+
+```xml
+<StackPanel>
+    <StackPanel.Resources>
+        <sys:String 
+            x:Key="ComboBoxTitle">Items:
+        </sys:String>
+    </StackPanel.Resources>
+    <Label 
+        Content="{StaticResource ComboBoxTitle}" />
+</StackPanel>
+```
+
+В этом случае, мы добавили ресурс в **StackPanel** и, после, использовали его с уровня дочернего элемента - **Label**. Другие элементы внутри **StackPanel** также смогут его использовать, как и дочерние элементы **Label**. А вот элементы вне **StackPanel** не будут иметь доступа к введенным ресурсам.
+
+Если Вам необходимо иметь доступ к ресурсу с разных окон - это тоже возможно. Файл `App.xaml` может содержать ресурсы так же как и окна (и другие типы элементов). Но когда Вы храните ресурсы в этом файле, то они становятся глобально доступными во всех окнах и UserControl'ах в проекте. Это работает также как и при хранении ресурсов в Window:
+
+```xml
+<Application ...>
+    <Application.Resources>
+        <sys:String
+            x:Key="ComboBoxTitle">
+            Items:
+        </sys:String>
+    </Application.Resources>
+</Application>
 ```
 
 ### Свойство TargetNullValue
 
-На случай, если свойство в источнике привязки вдруг имеет значение null, то есть оно не установлено, мы можем задать некоторое значение по умолчанию. Например:
+На случай, если свойство в источнике привязки вдруг имеет значение **null**, то есть оно не установлено, мы можем задать некоторое значение по умолчанию. Например:
 
 ```xml
 <Window.Resources>
@@ -290,59 +301,49 @@ class Phone
 
 У объекта **FrameworkElement**, от которого наследуются элементы управления, есть интересное свойство **DataContext**. Оно позволяет задавать для элемента и вложенных в него элементов некоторый контекст данных. Тогда вложенные элементы могут использовать объект **Binding** для привязки к конкретным свойствам этого контекста. Например, используем ранее определенный класс **Phone** и создадим контекст данных из объекта этого класса:
 
+Для WPF этого достаточно, а для Avalonia ещё нужно добавить тип данных: `x:DataType="local:Phone"`
+
 ```xml
-<Window 
-    x:Class="BindingApp.MainWindow"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:local="clr-namespace:BindingApp"
-    mc:Ignorable="d"
-    Title="MainWindow" 
-    Height="150" 
-    Width="300">
-    <Window.Resources>
-        <local:Phone 
-            x:Key="nexusPhone" 
-            Title="Nexus X5" 
-            Company="Google" 
-            Price="25000" />
-    </Window.Resources>
-    <Grid 
-        Background="Black" 
-        DataContext="{StaticResource nexusPhone}" 
-        TextBlock.Foreground="White">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <TextBlock 
-            Text="Модель" />
-        <TextBlock 
-            Text="{Binding Title}" 
-            Grid.Row="1" />
-        <TextBlock 
-            Text="Производитель" 
-            Grid.Column="1"/>
-        <TextBlock 
-            Text="{Binding Company}" 
-            Grid.Column="1" 
-            Grid.Row="1" />
-        <TextBlock 
-            Text="Цена" 
-            Grid.Column="2" />
-        <TextBlock 
-            Text="{Binding Price}" 
-            Grid.Column="2" 
-            Grid.Row="1" />
-    </Grid>
-</Window>
+<Window.Resources>
+    <local:Phone 
+        x:Key="nexusPhone" 
+        Title="Nexus X5" 
+        Company="Google" 
+        Price="25000" />
+</Window.Resources>
+<Grid 
+    DataContext="{StaticResource nexusPhone}" 
+    x:DataType="local:Phone"
+>
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+        <RowDefinition />
+        <RowDefinition />
+    </Grid.RowDefinitions>
+    <TextBlock 
+        Text="Модель" />
+    <TextBlock 
+        Text="{Binding Title}" 
+        Grid.Row="1" />
+    <TextBlock 
+        Text="Производитель" 
+        Grid.Column="1"/>
+    <TextBlock 
+        Text="{Binding Company}" 
+        Grid.Column="1" 
+        Grid.Row="1" />
+    <TextBlock 
+        Text="Цена" 
+        Grid.Column="2" />
+    <TextBlock 
+        Text="{Binding Price}" 
+        Grid.Column="2" 
+        Grid.Row="1" />
+</Grid>
 ```
 
 Таким образом мы задаем свойству **DataContext** некоторый динамический или статический ресурс. Затем осуществляем привязку к этому ресурсу.
@@ -352,69 +353,53 @@ class Phone
 Выше использовался объект **Phone** для привязки к текстовым блокам. Однако если мы изменим его, содержимое текстовых блоков не изменится. Например, добавим в окно приложения кнопку:
 
 ```xml
-<Window 
-    x:Class="BindingApp.MainWindow"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:local="clr-namespace:BindingApp"
-    mc:Ignorable="d"
-    Title="MainWindow" 
-    Height="150" 
-    Width="300"
->
-    <Window.Resources>
-        <local:Phone 
-            x:Key="nexusPhone" 
-            Title="Nexus X5" 
-            Company="Google" 
-            Price="25000" />
-    </Window.Resources>
-    <Grid 
-        Background="Black" 
-        DataContext="{StaticResource nexusPhone}" 
-        TextBlock.Foreground="White">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <TextBlock 
-            Text="Модель" />
-        <TextBlock 
-            Text="{Binding Title}" 
-            Grid.Row="1" />
-        <TextBlock 
-            Text="Производитель" 
-            Grid.Column="1"/>
-        <TextBlock 
-            Text="{Binding Company}" 
-            Grid.Column="1" 
-            Grid.Row="1" />
-        <TextBlock 
-            Text="Цена" 
-            Grid.Column="2" />
-        <TextBlock 
-            Text="{Binding Price}" 
-            Grid.Column="2" 
-            Grid.Row="1" />
- 
-        <Button 
-            Foreground="White" 
-            Content="Изменить" 
-            Click="Button_Click" 
-            Background="Black"
-            BorderBrush="Silver" 
-            Grid.Column="2" 
-            Grid.Row="2" />
-    </Grid>
-</Window>
+<Window.Resources>
+    <local:Phone 
+        x:Key="nexusPhone" 
+        Title="Nexus X5" 
+        Company="Google" 
+        Price="25000" />
+</Window.Resources>
+<Grid 
+    DataContext="{StaticResource nexusPhone}" 
+    x:DataType="local:Phone"
+    >
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition />
+        <ColumnDefinition />
+        <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+        <RowDefinition />
+        <RowDefinition />
+        <RowDefinition />
+    </Grid.RowDefinitions>
+    <TextBlock 
+        Text="Модель" />
+    <TextBlock 
+        Text="{Binding Title}" 
+        Grid.Row="1" />
+    <TextBlock 
+        Text="Производитель" 
+        Grid.Column="1"/>
+    <TextBlock 
+        Text="{Binding Company}" 
+        Grid.Column="1" 
+        Grid.Row="1" />
+    <TextBlock 
+        Text="Цена" 
+        Grid.Column="2" />
+    <TextBlock 
+        Text="{Binding Price}" 
+        Grid.Column="2" 
+        Grid.Row="1" />
+
+    <Button 
+        Content="Изменить" 
+        Click="Button_Click" 
+        Grid.Column="2" 
+        Grid.Row="2" />
+</Grid>
 ```
 
 И в файле кода для этой кнопки определим обработчик, в котором будет меняться свойства ресурса:
@@ -431,7 +416,6 @@ private void Button_Click(object sender, RoutedEventArgs e)
 
 ```cs
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
  
 class Phone : INotifyPropertyChanged
 {
@@ -468,7 +452,7 @@ class Phone : INotifyPropertyChanged
     }
  
     public event PropertyChangedEventHandler PropertyChanged;
-    public void OnPropertyChanged([CallerMemberName]string prop = "")
+    public void OnPropertyChanged(string prop = "")
     {
         if (PropertyChanged != null)
             PropertyChanged(this, new PropertyChangedEventArgs(prop));
@@ -476,7 +460,7 @@ class Phone : INotifyPropertyChanged
 }
 ```
 
-Когда объект класса изменяет значение свойства, то он через событие **PropertyChanged** извещает систему об изменении свойства. А система обновляет все привязанные объекты.
+Когда объект класса изменяет значение свойства, то он через событие **PropertyChanged** извещает систему об изменении свойства. А система обновляет привязанные объекты.
 
 ## Форматирование значений привязки и конвертеры значений
 
@@ -496,40 +480,27 @@ class Phone
 Допустим, нам надо в текстовый блок вывести не только цену, но и еще какой-нибудь текст:
 
 ```xml
-<Window 
-    x:Class="ValueConventerApp.MainWindow"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:local="clr-namespace:ValueConventerApp"
-    mc:Ignorable="d"
-    Title="MainWindow" 
-    Height="150" 
-    Width="300"
->
-    <Window.Resources>
-        <local:Phone 
-            x:Key="nexusPhone" 
-            Title="Nexus X5" 
-            Company="Google" 
-            Price="25000" />
-    </Window.Resources>
-    <Grid>
-        <TextBlock 
-            Text="{Binding 
-                StringFormat=Итоговая цена {0} рублей, 
-                Source={StaticResource nexusPhone}, 
-                Path=Price}" />
-    </Grid>
-</Window>
+<Window.Resources>
+    <local:Phone 
+        x:Key="nexusPhone" 
+        Title="Nexus X5" 
+        Company="Google" 
+        Price="25000" />
+</Window.Resources>
+<Grid>
+    <TextBlock 
+        Text="{Binding 
+            StringFormat=Итоговая цена {0} рублей, 
+            Source={StaticResource nexusPhone}, 
+            Path=Price}" />
+</Grid>
 ```
 
 ![](../img/08030.png)
 
-Свойство **StringFormat** получает набор параметров в фигурных скобках. Фигурные скобки ({0}) передают собственно то значение, к которому идет привязка. Можно сказать, что действие свойства **StringFormat** аналогично методу *String.Format()*, который выполняет форматирование строк.
+Свойство **StringFormat** получает набор параметров в фигурных скобках. Фигурные скобки (`{0}`) передают собственно то значение, к которому идет привязка. Можно сказать, что действие свойства **StringFormat** аналогично методу *String.Format()*, который выполняет форматирование строк.
 
-При необходимости мы можем использовать дополнительные опции форматирования, например, {0:C} для вывода валюты, {0:P} для вывода процентов и т.д.:
+При необходимости мы можем использовать дополнительные опции форматирования, например, `{0:C}` для вывода валюты, `{0:P}` для вывода процентов и т.д.:
 
 ```xml
 <TextBlock 
@@ -539,7 +510,7 @@ class Phone
         Path=Price}" />
 ```
 
-При этом если у нас значение в **StringFormat** начинается с фигурных скобок, например, "{0:C}", то перед ними ставятся еще пара фигурных скобок, как в данном случае. По сути они ничего важно не несут, просто служат для корректной интерпретации строки.
+При этом если у нас значение в **StringFormat** начинается с фигурных скобок, например, `{0:C}`, то перед ними ставятся еще пара фигурных скобок, как в данном случае. По сути они ничего важно не несут, просто служат для корректной интерпретации строки.
 
 Либо в этом случае нам надо экранировать скобки слешами:
 
@@ -577,16 +548,11 @@ class Phone
 
 ### Конвертеры значений
 
-Конвертеры значений (value converter) также позволяют преобразовать значение из источника привязки к типу, который понятен приемнику привязки. Так как не всегда два связываемых привязкой свойства могут иметь совместимые типы. И в этом случае как раз и нужен конвертер значений.
+Конвертеры значений (_value converter_) также позволяют преобразовать значение из источника привязки к типу, который понятен приемнику привязки. Так как не всегда два связываемых привязкой свойства могут иметь совместимые типы. И в этом случае как раз и нужен конвертер значений.
 
 Допустим, нам надо вывести дату в определенном формате. Для этой задачи создадим в проекте класс конвертера значений:
 
 ```cs
-using System;
-using System.ComponentModel;
-using System.Globalization;
-using System.Windows.Data;
- 
 public class DateTimeToDateConverter : IValueConverter
 {
     public object Convert(
@@ -628,35 +594,22 @@ public class DateTimeToDateConverter : IValueConverter
 Теперь применим этот конвертер в xaml:
 
 ```XML
-<Window 
-    x:Class="ValueConventerApp.MainWindow"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:local="clr-namespace:ValueConventerApp"
-    xmlns:sys="clr-namespace:System;assembly=mscorlib"
-    mc:Ignorable="d"
-    Title="MainWindow" 
-    Height="150" 
-    Width="300"
->
-    <Window.Resources>
-        <sys:DateTime x:Key="myDate">
-            2/12/2016
-        </sys:DateTime>
-        <local:DateTimeToDateConverter x:Key="myDateConverter" />
-    </Window.Resources>
-    <StackPanel>
-        <TextBlock 
-            Text="{Binding 
-                Source={StaticResource myDate},
-                Converter={StaticResource myDateConverter}}" />
-        <TextBlock 
-            Text="{Binding 
-                Source={StaticResource myDate}}" />
-    </StackPanel>
-</Window>
+<Window.Resources>
+    <sys:DateTime x:Key="myDate">
+        2/12/2016
+    </sys:DateTime>
+    <local:DateTimeToDateConverter 
+        x:Key="myDateConverter" />
+</Window.Resources>
+<StackPanel>
+    <TextBlock 
+        Text="{Binding 
+            Source={StaticResource myDate},
+            Converter={StaticResource myDateConverter}}" />
+    <TextBlock 
+        Text="{Binding 
+            Source={StaticResource myDate}}" />
+</StackPanel>
 ```
 
 Здесь искомая дата, которая выводится в текстовые блоки, задана в ресурсах. Также в ресурсах задан конвертер значений. Чтобы применить этот конвертер в конструкции привязки используется параметр **Converter** с указанием на ресурс: `Converter={StaticResource myDateConverter}`

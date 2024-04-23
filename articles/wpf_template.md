@@ -32,7 +32,7 @@
 
     <!-- типа логотип компании -->
     <Image 
-        Source="./Img/simon.png" 
+        Source="/Img/simon.png" 
         Grid.RowSpan="2"/>
 
     <StackPanel 
@@ -54,6 +54,10 @@
     </WrapPanel>
 </Grid>
 ```
+
+>Для того, чтобы картинки были видны в рантайме нужно их поместить а ресурсы:
+>
+>![](../img/image_resource.png)
 
 ## Модель данных
 
