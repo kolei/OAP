@@ -2,19 +2,21 @@
 
 1. Для начала создаём файл с данными для импорта. Я продолжаю тему *кошек*, вы реализуете свою предметную область:
 
-    >Мы должны уметь работать с разными типами данных, поэтому я добавил в исходные данные тип **Date** (дата прививки). Формат даты имеет множество разных форматов, но при экспорте обычно используют SQL формат (yyyy-mm-dd)
+    >Мы должны уметь работать с разными типами данных, поэтому я добавил в исходные данные тип **Date** (дата прививки). Формат даты имеет множество разных форматов, но при экспорте обычно используют SQL формат (`yyyy-mm-dd`)
 
     ```csv
-    1,"Дворняжка","Белый","Ириска",
-    2,"Шотландская вислоухая","Коричневый","Изи",2020-01-31
-    3,"Сиамский","Цветной","Макс",2022-05-10
+    age,breed,color,name,,dateOfLastVaccination
+    1,"Дворняжка","Белый","Ириска",,2024-04-29
+    2,"Шотландская вислоухая","Коричневый","Изи",,2020-01-31
+    3,"Сиамский","Цветной","Макс",,2022-05-10
     ```
 
-    * разделитель: запятая
+    * в первой строке названия полей, соответствующие модели данных
+    * разделитель запятая
     * строковые литералы (текст, в котором могут встретиться спец.символы, а лучше все текстовые поля) заключаем в двойные кавычки
-    * отсутствующие данные не заполняются (дата прививки у "Ириски"), но разделители колонок при этом указываются
+    * для отсутствующих полей (у меня `photo`) оставляем пустую строку
 
-    Файл сохраняем в подкаталог `bin/debug` вашего проекта - туда, где создается исполняемый (.exe) файл.
+    Файл сохраняем в подкаталог `bin/debug/net8.0-windows` вашего проекта - туда, где создается исполняемый (.exe) файл (название зависит от версии .NET и платформы).
 
 1. Правим модель (у нас добавилось свойство "Дата последней прививки")
 
@@ -28,7 +30,7 @@
         public string breed { get; set; }
         public string photo { get; set; }
         // новое свойство
-        public DateTime dateOfLastVaccination { get; set; }  
+        public DateOnly dateOfLastVaccination { get; set; }  
     }
     ```
 
@@ -40,6 +42,8 @@
 
     * Создаём приватную переменную для хранения загруженного списка и считываем данные в конструкторе:
 
+        Библиотека **CsvHelper** достаточно "умная" и преобразует строку в дату автоматически
+
         ```cs
         public class SCVDataProvider : IDataProvider
         {
@@ -48,58 +52,12 @@
             // конструктор класса
             public CSVDataProvider()
             {
-                // инициализируем переменную
-                catList = new List<Cat>();
-
-                // открываем файл с данными используя класс TextFieldParser
-                using (TextFieldParser parser = new TextFieldParser(@"/home/kei/temp/test.csv"))
-                {
-                    parser.TextFieldType = FieldType.Delimited;
-                    parser.SetDelimiters(",");
-
-                    /*
-                        По-умолчанию, в качестве разделителя разрядов 
-                        в числах с плавающей запятой (double) является точка
-                        Но конвертер использует текущую "культурную среду", а в России
-                        разделителем является запятая
-                        Чтобы явно указать разделитель мы межем конвертеру указать 
-                        объект NumberFormatInfo
-                    */
-                    NumberFormatInfo provider = new NumberFormatInfo();
-                    provider.NumberDecimalSeparator = ".";
-
-                    while (!parser.EndOfData)
+                using (var reader = new StreamReader("./cat.csv")) {
+                    using (var csv = new CsvReader(
+                        reader, 
+                        CultureInfo.InvariantCulture))
                     {
-                        string[] fields = parser.ReadFields();
-
-                        // проверяем количество полей
-                        if (fields.Length == 5)
-                        {
-                            try
-                            {
-                                var newCat = new Cat();
-                                newCat.age = Convert.ToInt32(fields[0]);
-                                newCat.breed = fields[1];
-                                newCat.color = fields[2];
-                                newCat.name = fields[3];
-                                // пример использования конвертера с провайдером
-                                // newCat.someDouble = Convert.ToDouble(fields[3], provider);
-                                try
-                                {
-                                    // дата может быть не задана, поэтому заворачиваю в исключение
-                                    // хотя проще сделать проверку
-                                    newCat.dateOfLastVaccination = DateTime.Parse(fields[4]);
-                                }
-                                catch (Exception e)
-                                {
-                                    newCat.dateOfLastVaccination = null;
-                                }
-                                catList.Add(newCat);
-                            }
-                            catch (Exception e)
-                            {
-                            }
-                        }
+                        catList = csv.GetRecords<Foo>();
                     }
                 }
             }
