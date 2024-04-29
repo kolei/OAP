@@ -57,7 +57,9 @@
                         reader, 
                         CultureInfo.InvariantCulture))
                     {
-                        catList = csv.GetRecords<Foo>();
+                        // CsvHelper использует отложенное чтение через 
+                        // yeld, поэтому сразу преобразуем в список
+                        catList = csv.GetRecords<Cat>().ToList();
                     }
                 }
             }
