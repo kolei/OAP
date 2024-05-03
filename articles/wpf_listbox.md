@@ -78,7 +78,7 @@
 <Window.Resources>
     <BitmapImage 
         x:Key='defaultImage' 
-        UriSource='/Images/picture.png' />
+        UriSource='./Images/picture.png' />
 </Window.Resources>
 ```
 
@@ -91,7 +91,7 @@
 ```cs
 public class Cat
 {
-    public Uri ImageBitmap {
+    public Uri? ImageBitmap {
         get {
             var imageName = Environment.
                 CurrentDirectory + "img/" + (photo ?? "");
@@ -117,7 +117,7 @@ public class Cat
         Text="{Binding name}"/>
 
     <TextBlock 
-        Text="{Binding bread}"/>
+        Text="{Binding breed}"/>
 </StackPanel>
 ```
 
@@ -185,14 +185,15 @@ public class Cat
 
 Свойство *ItemContainerStyle* уже не нужно и его можно убрать.
 
-Размеры наших элементов по-прежнему зависят от содержимого - тут надо править шаблон **ItemTemplate**.
+Размеры наших элементов по-прежнему зависят от содержимого - тут надо править шаблон (ширина элемента **Grid** в **DataTemplate**).
+
+![](../img/listbox001.png)
 
 Итоговая разметка для вывода "плиткой" должна выглядеть примерно так:
 
 ```xml
 <ListView
-    ItemsSource="{Binding ProductList}"
-    x:Name="ListView"
+    ItemsSource="{Binding catList}"
     ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
 >
     <ListView.ItemsPanel>
@@ -201,21 +202,15 @@ public class Cat
                 HorizontalAlignment="Center" />
         </ItemsPanelTemplate>
     </ListView.ItemsPanel>
-
-    <!--ListView.ItemContainerStyle>
-        <Style 
-            TargetType="ListViewItem">
-            <Setter 
-                Property="HorizontalContentAlignment"
-                Value="Stretch" />
-        </Style>
-    </-->
-    
     
     <ListView.ItemTemplate>
-        ...
-    </ListView.ItemTemplate>
-</ListView>    
+        <DataTemplate>
+            <Grid
+                Width="200"
+                ...
+```
+
+```xml
 ```
 
 Предыдущая лекция | &nbsp; | Следующая лекция
