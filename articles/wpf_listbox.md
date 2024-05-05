@@ -1,6 +1,6 @@
 Предыдущая лекция | &nbsp; | Следующая лекция
 :----------------:|:----------:|:----------------:
-[Поиск, сортировка](./articles/wpf_search_sort.md) | [Содержание](../readme.md#тема-8-оконные-приложения) | &nbsp;
+[Поиск, сортировка](./wpf_search_sort.md) | [Содержание](../readme.md#тема-8-оконные-приложения) | [Стили, триггеры и темы](./wpf_style.md)
 
 # Вывод данных согласно макета (ListBox, Image).
 
@@ -133,22 +133,22 @@ public class Cat
 
 Видно, что размер элемента зависит от содержимого.
 
-Чтобы это исправить нужно добавить в **ListView** стиль для элемента контейнера, в котором задать горизонтальное выравнивание по ширине:
+Чтобы это исправить нужно добавить в **ListBox** стиль для элемента контейнера, в котором задать горизонтальное выравнивание по ширине:
 
 ```xml
-<ListView
+<ListBox
     Grid.Row="1"
     Grid.Column="1"
     ItemsSource="{Binding ProductList}"
 >
-    <ListView.ItemContainerStyle>
+    <ListBox.ItemContainerStyle>
         <Style 
-            TargetType="ListViewItem">
+            TargetType="ListBoxItem">
             <Setter 
                 Property="HorizontalContentAlignment"
                 Value="Stretch" />
         </Style>
-    </ListView.ItemContainerStyle>
+    </ListBox.ItemContainerStyle>
     ...
 ```
 
@@ -165,19 +165,21 @@ public class Cat
 Мы будем использовать уже знакомую вам **WrapPanel**:
 
 ```xml
-<ListView.ItemsPanel>
+<ListBox.ItemsPanel>
     <ItemsPanelTemplate>
         <WrapPanel 
-            HorizontalAlignment="Center" />
+            HorizontalAlignment="Center" 
+            ItemsWidth="200"
+        />
     </ItemsPanelTemplate>
-</ListView.ItemsPanel>
+</ListBox.ItemsPanel>
 ```
 
 >Атрибут *HorizontalAlignment* используем, чтобы "плитки" центрировались.
 
 ![](../img/01072.png)
 
-Как видим, элементы отображаются горизонтальным списком, но нет переноса. Для включения переноса элементов нужно в **ListView** отключить горизонтальный скролл, добавив атрибут `ScrollViewer.HorizontalScrollBarVisibility="Disabled"`:
+Как видим, элементы отображаются горизонтальным списком, но нет переноса. Для включения переноса элементов нужно в **ListBox** отключить горизонтальный скролл, добавив атрибут `ScrollViewer.HorizontalScrollBarVisibility="Disabled"`:
 
 ![](../img/01073.png)
 
@@ -190,27 +192,21 @@ public class Cat
 Итоговая разметка для вывода "плиткой" должна выглядеть примерно так:
 
 ```xml
-<ListView
+<ListBox
     ItemsSource="{Binding catList}"
     ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
 >
-    <ListView.ItemsPanel>
+    <ListBox.ItemsPanel>
         <ItemsPanelTemplate>
             <WrapPanel 
                 HorizontalAlignment="Center" />
         </ItemsPanelTemplate>
-    </ListView.ItemsPanel>
+    </ListBox.ItemsPanel>
     
-    <ListView.ItemTemplate>
-        <DataTemplate>
-            <Grid
-                Width="200"
-                ...
-```
-
-```xml
+    <ListBox.ItemTemplate>
+        ...
 ```
 
 Предыдущая лекция | &nbsp; | Следующая лекция
 :----------------:|:----------:|:----------------:
-[Поиск, сортировка](./articles/wpf_search_sort.md) | [Содержание](../readme.md#тема-8-оконные-приложения) | &nbsp;
+[Поиск, сортировка](./wpf_search_sort.md) | [Содержание](../readme.md#тема-8-оконные-приложения) | [Стили, триггеры и темы](./wpf_style.md)
