@@ -524,8 +524,9 @@ public partial class MainWindow : Window
     private void ToggleView_Click(object sender, RoutedEventArgs e)
     {
         currentStyle = currentStyle == "StackStyle" ? "WrapStyle" : "StackStyle";
-        MyListBox.Style = (Style)this.FindResource(currentStyle);
-
+        var newStyle = (Style)TryFindResource(currentStyle)
+        if (newStyle != null)
+            catListBox.Style = newStyle;
     }
     ```
 
