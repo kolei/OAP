@@ -1,6 +1,6 @@
 Предыдущая лекция | &nbsp; | Следующая лекция
 :----------------:|:----------:|:----------------:
-[Вывод данных согласно макета (ListBox, Image)](./articles/wpf_listbox.md) | [Содержание](../readme.md#тема-8-оконные-приложения) | [Стили, триггеры и темы](./wpf_style.md)
+[Вывод данных согласно макета (ListBox, Image)](./articles/wpf_listbox.md) | [Содержание](../readme.md#тема-8-оконные-приложения) | [Создание окон. Модальные окна](./wpf_window.md)
 
 >Два инициативных студента по итогам прошлой лекции решили сделать переключение вида отображения "список" и "плитка" кнопкой. Нарыли интересную тему про стили...
 
@@ -461,14 +461,17 @@ public partial class MainWindow : Window
 
 ## Переключение вида списка
 
-1. Переносим настройки **ListBox** в ресурсы окна:
+1. Переносим настройки **ListBox** в ресурсы окна (в том числе и шаблон элемента списка):
 
     ```xml
     <Window.Resources>
         <Style 
             x:Key="StackStyle" 
-            TargetType="ListBox">
-            <Setter Property="ItemsPanel">
+            TargetType="ListBox"
+        >
+            <Setter 
+                Property="ItemsPanel"
+            >
                 <Setter.Value>
                     <ItemsPanelTemplate>
                         <StackPanel 
@@ -476,17 +479,94 @@ public partial class MainWindow : Window
                     </ItemsPanelTemplate>
                 </Setter.Value>
             </Setter>
+
+            <Setter 
+                Property="ItemTemplate"
+            >
+                <Setter.Value>
+                    <DataTemplate>
+                        <Border 
+                            BorderThickness="2" 
+                            BorderBrush="DarkRed" 
+                            CornerRadius="4" 
+                            Margin="4"
+                        >
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="64"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Image 
+                                    Width="64" 
+                                    Height="64" 
+                                    Source="{Binding ImageBitmap}"/>
+                                
+                                <StackPanel 
+                                    Grid.Column="1"  
+                                    Orientation="Vertical" 
+                                    Margin="5,2,0,5"
+                                >
+                                    <TextBlock Text="{Binding name}"/>
+                                    <TextBlock Text="{Binding surname}"/>
+                                </StackPanel>
+
+                                <TextBlock 
+                                    Grid.Column="2"  
+                                    Text="{Binding age}" 
+                                    Margin="0,2,10,0"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
         <Style 
             x:Key="WrapStyle" 
-            TargetType="ListBox">
-            <Setter Property="ItemsPanel">
+            TargetType="ListBox"
+        >
+            <Setter 
+                Property="ItemsPanel"
+            >
                 <Setter.Value>
                     <ItemsPanelTemplate>
                         <WrapPanel 
                             HorizontalAlignment="Center"
                             ItemWidth="200"/>
                     </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Setter 
+                Property="ItemTemplate"
+            >
+                <Setter.Value>
+                    <DataTemplate>
+                        <Border 
+                            BorderThickness="1" 
+                            BorderBrush="Black" 
+                            CornerRadius="5" 
+                            Margin="5"
+                        >
+                            <StackPanel 
+                                Orientation="Vertical"
+                            >
+                                <Image 
+                                    Width="200" 
+                                    Source="{Binding ImageBitmap}"/>
+                                <TextBlock 
+                                    Text="{Binding name}"
+                                    HorizontalAlignment="Center"/>
+                                <TextBlock 
+                                    Text="{Binding surname}"
+                                    HorizontalAlignment="Center"/>
+                                <TextBlock 
+                                    Text="{Binding age}"
+                                    HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
@@ -502,7 +582,7 @@ public partial class MainWindow : Window
         ...
     ```
 
-    Убираем настройки для `<ListBox.ItemsPanel>` а для `<ListBox.ItemContainerStyle>` возвращаем:
+    Убираем настройки для `<ListBox.ItemsPanel>` и `<ListBox.ItemTemplate>`, а для `<ListBox.ItemContainerStyle>` возвращаем (хотя он нужен только для стека и его тоже можно перенести в соответствующий стиль):
 
     ```xml
     <ListBox.ItemContainerStyle>
@@ -538,4 +618,4 @@ public partial class MainWindow : Window
 
 Предыдущая лекция | &nbsp; | Следующая лекция
 :----------------:|:----------:|:----------------:
-[Вывод данных согласно макета (ListBox, Image)](./articles/wpf_listbox.md) | [Содержание](../readme.md#тема-8-оконные-приложения) | [Стили, триггеры и темы](./wpf_style.md)
+[Вывод данных согласно макета (ListBox, Image)](./articles/wpf_listbox.md) | [Содержание](../readme.md#тема-8-оконные-приложения) | [Создание окон. Модальные окна](./wpf_window.md)

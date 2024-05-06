@@ -155,6 +155,7 @@
 1. [Поиск, сортировка](./articles/wpf_search_sort.md)
 1. [Вывод данных согласно макета (ListBox, Image)](./articles/wpf_listbox.md)
 1. [Стили, триггеры и темы](./articles/wpf_style.md)
+1. [Создание окон. Модальные окна](./articles/wpf_window.md)
 1. Создание WPF-приложений по индивидуальным заданиям (подготовка к экзамену)<!-- 8(66) -->
 
 ### Лабораторные работы
@@ -177,11 +178,6 @@
 
  <!-- 
  
- вывод "плиткой" от WorldSkills
- 
- https://nationalteam.worldskills.ru/skills/sozdanie-spiskov-listview-poisk-i-filtratsiya-dannykh/ 
- 
-
 там же есть рисование графиков и работа с вордом
 
 https://nationalteam.worldskills.ru/skills/programmnye-resheniya-dlya-biznesa/
